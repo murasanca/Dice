@@ -1,4 +1,4 @@
-# <a href="https://play.google.com/store/apps/details?id=com.murasanca.Siren" target="_blank">Dice</a>
+# <a href="https://play.google.com/store/apps/details?id=com.murasanca.Dice" target="_blank">Dice</a>
 Just roll with it.
 <hr>
 Rolling the dice can have variable consequences in games. Sometimes luck is on your side, sometimes not.
