@@ -1,7 +1,9 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <projectSettings>
   <projectSetting name="com.google.external-dependency-managerAnalyticsCookie" value="afb08386ed8e4aa3b380ace0ddd31673" />
   <projectSetting name="com.google.external-dependency-managerAnalyticsEnabled" value="True" />
+  <projectSetting name="com.google.firebaseAnalyticsCookie" value="81c2f01414bb48999fd8f1dcc819ad5f" />
+  <projectSetting name="com.google.firebaseAnalyticsEnabled" value="True" />
   <projectSetting name="Google.IOSResolver.AutoPodToolInstallInEditor" value="True" />
   <projectSetting name="Google.IOSResolver.CocoapodsIntegrationMethod" value="2" />
   <projectSetting name="Google.IOSResolver.PodfileAddUseFrameworks" value="True" />
@@ -23,7 +25,7 @@
   <projectSetting name="GooglePlayServices.AndroidPackageInstallationEnabled" value="True" />
   <projectSetting name="GooglePlayServices.AutoResolutionDisabledWarning" value="True" />
   <projectSetting name="GooglePlayServices.AutoResolveOnBuild" value="True" />
-  <projectSetting name="GooglePlayServices.AutoResolverEnabled" value="True" />
+  <projectSetting name="GooglePlayServices.AutoResolverEnabled" value="False" />
   <projectSetting name="GooglePlayServices.ExplodeAars" value="True" />
   <projectSetting name="GooglePlayServices.LocalMavenRepoDir" value="Assets/GeneratedLocalRepo" />
   <projectSetting name="GooglePlayServices.PatchAndroidManifest" value="True" />

@@ -8,6 +8,8 @@ namespace murasanca
     {
         public static Music music;
 
+        // murasanca
+
         private void Awake()
         {
             if (music is null)
@@ -19,8 +21,8 @@ namespace murasanca
 
         private void Start()
         {
-            GetComponent<AudioSource>().pitch = Preferences.MPV;
-            GetComponent<AudioSource>().volume=Preferences.MVV;
+            GetComponent<AudioSource>().volume = Preferences.Volume;
+            Time.timeScale = Mathf.Abs(GetComponent<AudioSource>().pitch = Preferences.Pitch);
         }
     }
 }

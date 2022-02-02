@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Google Play game services IDs. Save this file as res/values/games-ids.xml in your project.-->
+<resources>
+  <!--app_id-->
+  <string name="app_id" translatable="false">1024559272214</string>
+  <!--package_name-->
+  <string name="package_name" translatable="false">com.murasanca.Dice</string>
+  <!--achievement 132-->
+  <string name="achievement_132" translatable="false">CgkIlqL34-gdEAIQAA</string>
+  <!--achievement 14-->
+  <string name="achievement_14" translatable="false">CgkIlqL34-gdEAIQDA</string>
+  <!--achievement 13-->
+  <string name="achievement_13" translatable="false">CgkIlqL34-gdEAIQCw</string>
+  <!--achievement 12-->
+  <string name="achievement_12" translatable="false">CgkIlqL34-gdEAIQCg</string>
+  <!--achievement 11-->
+  <string name="achievement_11" translatable="false">CgkIlqL34-gdEAIQCQ</string>
+  <!--achievement 10-->
+  <string name="achievement_10" translatable="false">CgkIlqL34-gdEAIQCA</string>
+  <!--achievement 9-->
+  <string name="achievement_9" translatable="false">CgkIlqL34-gdEAIQBw</string>
+  <!--achievement 8-->
+  <string name="achievement_8" translatable="false">CgkIlqL34-gdEAIQBg</string>
+  <!--leaderboard Dice-->
+  <string name="leaderboard_dice" translatable="false">CgkIlqL34-gdEAIQAw</string>
+</resources>

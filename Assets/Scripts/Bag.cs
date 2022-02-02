@@ -9,11 +9,22 @@ namespace murasanca
 {
     public class Bag : MonoBehaviour
     {
+        [SerializeField]
+        private GameObject[] gameObjects = new GameObject[3];
+
         private float x;
 
         private Touch touch;
 
-        private static GameObject bagButton, checkmarkButton, closeButton, dicesGameObject, inventoryButton, keyButton, keyRawImage, lockButton, menuButton, productText, reloadButton, shieldRawImage;
+        private readonly Vector2 banner = Menu.banner;
+
+        private readonly Vector2[]
+                    vector2s0 = new Vector2[3], // Shield.
+                    vector2s1 = new Vector2[3]; // Advertisement.
+
+        private readonly WaitForSeconds wFS = Menu.wFS; // wFS: Wait For Seconds.
+
+        private static GameObject checkmarkButton, closeButton, dicesGameObject, inventoryButton, keyButton, keyRawImage, lockButton, productText, shieldRawImage;
 
         private readonly static GameObject[] dices = new GameObject[7];
 
@@ -24,16 +35,25 @@ namespace murasanca
             "20","21","22" // Data: 3.
         };
 
-        private readonly static Vector2
-            bagButton0 = new Vector2(0, -64), bagButton1 = new Vector2(0, -154),
-            menuButton0 = new Vector2(64, -64), menuButton1 = new Vector2(64, -154),
-            reloadButton0 = new Vector2(-64, -64), reloadButton1 = new Vector2(-64, -154);
-
         public static int set = -1;
+
+        // murasanca
+
+        private Vector2[] Vector2s
+        {
+            get
+            {
+                if (!Monetization.IBL || IAP.HR(0))
+                    return vector2s0;
+                else
+                    return vector2s1;
+            }
+        }
+
+        // murasanca
 
         private void Awake()
         {
-            bagButton = GameObject.Find("Bag Button");
             checkmarkButton = GameObject.Find("Checkmark Button (Legacy)");
             closeButton = GameObject.Find("Close Button");
             dicesGameObject = GameObject.Find("Dices Game Object");
@@ -41,42 +61,22 @@ namespace murasanca
             keyButton = GameObject.Find("Key Button");
             keyRawImage = GameObject.Find("Key Raw Image");
             lockButton = GameObject.Find("Lock Button");
-            menuButton = GameObject.Find("Menu Button");
             productText = GameObject.Find("Product Text (TMP)");
-            reloadButton = GameObject.Find("Reload Button (Legacy)");
             shieldRawImage = GameObject.Find("Shield Raw Image");
+
+            for (int i = 0; i < gameObjects.Length; i++)
+            {
+                vector2s0[i] = banner + gameObjects[i].GetComponent<RectTransform>().anchoredPosition;
+                vector2s1[i] = gameObjects[i].GetComponent<RectTransform>().anchoredPosition;
+            }
 
             StartCoroutine(Enumerator());
         }
 
-        private System.Collections.IEnumerator Enumerator()
-        {
-            while (true)
-            {
-                if (!Monetization.IsInitialized || IAP.HasReceipt(0))
-                {
-                    bagButton.GetComponent<RectTransform>().anchoredPosition = bagButton0;
-                    menuButton.GetComponent<RectTransform>().anchoredPosition = menuButton0;
-                    reloadButton.GetComponent<RectTransform>().anchoredPosition = reloadButton0;
-                }
-                else
-                {
-                    bagButton.GetComponent<RectTransform>().anchoredPosition = bagButton1;
-                    menuButton.GetComponent<RectTransform>().anchoredPosition = menuButton1;
-                    reloadButton.GetComponent<RectTransform>().anchoredPosition = reloadButton1;
-                }
-                yield return Menu.waitForSeconds;
-            }
-        }
+        private void Start() => Set(set);
 
         private void Update()
         {
-            if (Input.GetKey(KeyCode.Escape))
-                if (lockButton.activeSelf)
-                    Scene.Load(0);
-                else
-                    Close();
-
             if (Input.touchCount is not 0)
             {
                 touch = Input.GetTouch(0);
@@ -85,6 +85,79 @@ namespace murasanca
                 else if (256 < Mathf.Abs(x - touch.position.x) && touch.phase is TouchPhase.Ended)
                     Slide(Mathf.Sign(x - touch.position.x));
             }
+        }
+
+        // murasanca
+
+        private System.Collections.IEnumerator Enumerator()
+        {
+            while (true)
+            {
+                for (int i = 0; i < gameObjects.Length; i++)
+                    gameObjects[i].GetComponent<RectTransform>().anchoredPosition = Vector2s[i];
+
+                yield return wFS;
+            }
+        }
+
+        // murasanca
+
+        public void B() // B: Bag.
+        {
+            set = -1;
+            Scene.Load(1);
+        }
+
+        public void Checkmark() => IAP.Checkmark(set);
+
+        public void Close()
+        {
+            checkmarkButton.SetActive(false);
+            closeButton.SetActive(false);
+            keyButton.SetActive(false);
+            lockButton.SetActive(true);
+        }
+
+        public void I() // I: Inventory.
+        {
+            Inventory.set = set;
+            Scene.Load(3);
+        }
+
+        public void Key() => Set(set);
+
+        public void Load(int scene) => Scene.Load(scene);
+
+        public void Lock()
+        {
+            if (set is not -1)
+                checkmarkButton.GetComponent<IAPButton>().productId = IAP.products[set];
+            else
+                checkmarkButton.GetComponent<IAPButton>().productId = IAP.products[0];
+
+            checkmarkButton.SetActive(true);
+            closeButton.SetActive(true);
+            keyButton.GetComponent<Button>().interactable = true;
+            keyButton.SetActive(true);
+            lockButton.SetActive(false);
+        }
+
+        public void Reload() => PlayerPrefs.DeleteAll();
+
+        public void Slide(float sign)
+        {
+            if (sign is 1)
+                if (set is not 22)
+                    ++set;
+                else
+                    set = -1;
+            else // sign is -1.
+                if (set is not -1)
+                --set;
+            else
+                set = 22;
+
+            Set(set);
         }
 
         private static void Instantiate()
@@ -111,93 +184,38 @@ namespace murasanca
             }
         }
 
-        private void Start() => Set(set);
-
-        public void Checkmark() => IAP.BuyNonConsumable(set);
-
-        public void Close()
-        {
-            checkmarkButton.SetActive(false);
-            closeButton.SetActive(false);
-            keyButton.SetActive(false);
-            lockButton.SetActive(true);
-        }
-
-        public void Key() => Set(set);
-
-        public void Lock()
-        {
-            if (set is not -1)
-                checkmarkButton.GetComponent<IAPButton>().productId = IAP.nonConsumables[set];
-            else
-                checkmarkButton.GetComponent<IAPButton>().productId = IAP.nonConsumables[0];
-
-            checkmarkButton.SetActive(true);
-            closeButton.SetActive(true);
-            keyButton.GetComponent<Button>().interactable = true;
-            keyButton.SetActive(true);
-            lockButton.SetActive(false);
-        }
-
-        public void Slide(float sign)
-        {
-            if (sign is 1)
-                if (set is not 22)
-                    ++set;
-                else
-                    set = -1;
-            else // sign is -1.
-                if (set is not -1)
-                --set;
-            else
-                set = 22;
-
-            Set(set);
-        }
-
-        public static void Set()
-        {
-            Preferences.DD = Preferences.D4 = Preferences.D6 = Preferences.D8 = Preferences.D10 = Preferences.D12 = Preferences.D20 = set;
-            Set(set);
-        }
+        public static void Set() => Set(Preferences.DD = Preferences.D4 = Preferences.D6 = Preferences.D8 = Preferences.D10 = Preferences.D12 = Preferences.D20 = set);
 
         public static void Set(int set)
         {
+            checkmarkButton.SetActive(false);
+            closeButton.SetActive(false);
+
             foreach (GameObject dice in dices)
                 Destroy(dice);
 
             switch (set)
             {
                 case -1: // Shield
-                    if (IAP.HasReceipt(0))
+                    inventoryButton.SetActive(false);
+                    keyRawImage.SetActive(false);
+                    productText.GetComponent<TextMeshProUGUI>().text = "0";
+                    productText.SetActive(true);
+                    shieldRawImage.SetActive(true);
+
+                    if (IAP.HR(0))
                     {
-                        checkmarkButton.SetActive(false);
-                        closeButton.SetActive(false);
-                        inventoryButton.SetActive(false);
                         keyButton.GetComponent<Button>().interactable = false;
                         keyButton.SetActive(true);
-                        keyRawImage.SetActive(false);
                         lockButton.SetActive(false);
-                        productText.GetComponent<TextMeshProUGUI>().text = "SHIELD";
-                        productText.SetActive(true);
-                        shieldRawImage.SetActive(true);
                     }
                     else
                     {
-                        checkmarkButton.SetActive(false);
-                        closeButton.SetActive(false);
-                        inventoryButton.SetActive(false);
                         keyButton.SetActive(false);
-                        keyRawImage.SetActive(false);
                         lockButton.SetActive(true);
-                        productText.GetComponent<TextMeshProUGUI>().text = "SHIELD";
-                        productText.SetActive(true);
-                        shieldRawImage.SetActive(true);
                     }
                     break;
-                case 0: // 0
-                    checkmarkButton.SetActive(false);
-                    closeButton.SetActive(false);
+                case 0:
                     inventoryButton.SetActive(true);
                     keyButton.SetActive(false);
                     keyRawImage.SetActive(true);
@@ -208,48 +226,29 @@ namespace murasanca
                     Instantiate();
                     break;
                 default:
-                    if (IAP.HasReceipt(set))
+                    keyButton.SetActive(false);
+                    shieldRawImage.SetActive(false);
+
+                    if (IAP.HR(set))
                     {
-                        checkmarkButton.SetActive(false);
-                        closeButton.SetActive(false);
                         inventoryButton.SetActive(true);
-                        keyButton.SetActive(false);
                         keyRawImage.SetActive(true);
                         lockButton.SetActive(false);
                         productText.SetActive(false);
-                        shieldRawImage.SetActive(false);
                     }
                     else
                     {
-                        checkmarkButton.SetActive(false);
-                        closeButton.SetActive(false);
                         inventoryButton.SetActive(false);
-                        keyButton.SetActive(false);
                         keyRawImage.SetActive(false);
                         lockButton.SetActive(true);
                         productText.GetComponent<TextMeshProUGUI>().text = products[set];
                         productText.SetActive(true);
-                        shieldRawImage.SetActive(false);
                     }
 
                     Instantiate();
                     break;
             }
         }
-
-        public void BagB() // B: Button.
-        {
-            set = -1;
-            Scene.Load(1);
-        }
-
-        public void InventoryB() // B: Button.
-        {
-            Inventory.set = set;
-            Scene.Load(3);
-        }
-
-        public void Load(int scene) => Scene.Load(scene);
     }
 }
 

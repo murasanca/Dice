@@ -8,6 +8,19 @@ namespace murasanca
 {
     public class Notification : MonoBehaviour
     {
+        public static Notification notification;
+
+        // murasanca
+
+        private void Awake()
+        {
+            if (notification is null)
+                notification = this;
+            else if (notification != this)
+                Destroy(gameObject);
+            DontDestroyOnLoad(notification);
+        }
+
         private void Start()
         {
             AndroidNotificationCenter.CancelAllNotifications();
@@ -48,7 +61,7 @@ namespace murasanca
                 // Title = "Dice",
                 UsesStopwatch = false
             };
-            AndroidNotificationCenter.SendNotification(androidNotification, "S");
+            AndroidNotificationCenter.SendNotification(androidNotification, "D");
         }
     }
 }

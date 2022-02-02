@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "com.unity.adaptiveperformance": {
-      "version": "3.0.0",
+      "version": "4.0.0",
       "depth": 1,
       "source": "registry",
       "dependencies": {
@@ -11,16 +11,16 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.adaptiveperformance.samsung.android": {
-      "version": "3.0.0",
+      "version": "4.0.0",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.adaptiveperformance": "3.0.0"
+        "com.unity.adaptiveperformance": "4.0.0"
       },
       "url": "https://packages.unity.com"
     },
     "com.unity.ads": {
-      "version": "3.7.5",
+      "version": "4.0.0",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -29,11 +29,10 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.collab-proxy": {
-      "version": "1.15.7",
+      "version": "1.15.12",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.nuget.newtonsoft-json": "2.0.0",
         "com.unity.services.core": "1.0.1"
       },
       "url": "https://packages.unity.com"
@@ -56,7 +55,7 @@
       }
     },
     "com.unity.ide.rider": {
-      "version": "3.0.9",
+      "version": "3.0.12",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -65,7 +64,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.visualstudio": {
-      "version": "2.0.12",
+      "version": "2.0.14",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -143,18 +142,18 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.sysroot": {
-      "version": "0.1.19-preview",
+      "version": "1.0.0",
       "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
     "com.unity.sysroot.linux-x86_64": {
-      "version": "0.1.15-preview",
+      "version": "1.0.0",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.sysroot": "0.1.19-preview"
+        "com.unity.sysroot": "1.0.0"
       },
       "url": "https://packages.unity.com"
     },
@@ -179,7 +178,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.timeline": {
-      "version": "1.6.3",
+      "version": "1.6.4",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -191,12 +190,12 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.toolchain.win-x86_64-linux-x86_64": {
-      "version": "0.1.21-preview",
+      "version": "1.0.0",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.sysroot": "0.1.19-preview",
-        "com.unity.sysroot.linux-x86_64": "0.1.14-preview"
+        "com.unity.sysroot": "1.0.0",
+        "com.unity.sysroot.linux-x86_64": "1.0.0"
       },
       "url": "https://packages.unity.com"
     },

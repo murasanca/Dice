@@ -11,29 +11,78 @@ namespace murasanca
     {
         [SerializeField]
         private GameObject
+            mPB, // mPB: Music Pitch Button.
             mPS, // mPS: Music Pitch Slider.
-            mVS, // mVS: Music Volume Slider.
             mPT, // mPT: Music Pitch Text (TMP).
+            mVB, // mVB: Music Volume Button.
+            mVS, // mVS: Music Volume Slider.
             mVT, // mVT: Music Volume Text (TMP).
+            pB, // pB: Poly Button.
             pH, // pH: Poly Handle.
             pS, // pS: Poly Slider.
             pT; // pT: Poly Text.
 
         [SerializeField]
-        private Sprite gold,silver;
+        private GameObject[] gameObjects = new GameObject[3];
+
+        [SerializeField]
+        private Sprite gold, silver;
+
+        private readonly Vector2 banner = Menu.banner;
+
+        private readonly Vector2[]
+                    vector2s0 = new Vector2[3], // Shield.
+                    vector2s1 = new Vector2[3]; // Advertisement.
+
+        private readonly WaitForSeconds wFS = Menu.wFS; // wFS: Wait For Seconds.
+
+        // murasanca
+
+        private Vector2[] Vector2s
+        {
+            get
+            {
+                if (!Monetization.IBL || IAP.HR(0))
+                    return vector2s0;
+                else
+                    return vector2s1;
+            }
+        }
+
+        // murasanca
 
         private void Awake()
         {
-            mPS.GetComponent<Slider>().value = Preferences.MPV;
-            mVS.GetComponent<Slider>().value = Preferences.MVV;
+            for (int i = 0; i < gameObjects.Length; i++)
+            {
+                vector2s0[i] = banner + gameObjects[i].GetComponent<RectTransform>().anchoredPosition;
+                vector2s1[i] = gameObjects[i].GetComponent<RectTransform>().anchoredPosition;
+            }
+
+            mVB.GetComponent<Button>().interactable = Preferences.Volume is .64f;
+            mPB.GetComponent<Button>().interactable = Preferences.Pitch is 1;
+
+            mPS.GetComponent<Slider>().value = Preferences.Pitch;
+            mVS.GetComponent<Slider>().value = Preferences.Volume;
             pS.GetComponent<Slider>().value = Preferences.Poly;
+
+            StartCoroutine(Enumerator());
         }
 
-        private void Update()
+        // murasanca
+
+        private System.Collections.IEnumerator Enumerator()
         {
-            if (Input.GetKey(KeyCode.Escape))
-                Load(0);
+            while (true)
+            {
+                for (int i = 0; i < gameObjects.Length; i++)
+                    gameObjects[i].GetComponent<RectTransform>().anchoredPosition = Vector2s[i];
+
+                yield return wFS;
+            }
         }
+
+        // murasanca
 
         public void Load(int scene) => Scene.Load(scene);
 
@@ -151,24 +200,32 @@ namespace murasanca
 
         public void OnMPVChanged() // MPV: Music Pitch Value.
         {
-            Preferences.MPV = Music.music.GetComponent<AudioSource>().pitch = mPS.GetComponent<Slider>().value;
-            mPT.GetComponent<TextMeshProUGUI>().text = Preferences.MPV.ToString();
+            Time.timeScale = Mathf.Abs(Preferences.Pitch = Music.music.GetComponent<AudioSource>().pitch = mPS.GetComponent<Slider>().value);
+            
+            mPB.GetComponent<Button>().interactable = Preferences.Pitch is not 1;
+            mPT.GetComponent<TextMeshProUGUI>().text = Preferences.Pitch.ToString("F2");
         }
 
         public void OnMVVChanged() // MVV: Music Volume Value.
         {
-            Preferences.MVV = Music.music.GetComponent<AudioSource>().volume = mVS.GetComponent<Slider>().value;
-            mVT.GetComponent<TextMeshProUGUI>().text = Preferences.MVV.ToString();
+            Preferences.Volume = Music.music.GetComponent<AudioSource>().volume = mVS.GetComponent<Slider>().value;
+            
+            mVB.GetComponent<Button>().interactable = Preferences.Volume is not .64f;
+            mVT.GetComponent<TextMeshProUGUI>().text = Preferences.Volume.ToString("F2");
         }
 
         public void OnPVChanged() // PV: Poly Value.
         {
-            Preferences.Poly = (int) pS.GetComponent<Slider>().value;
+            Preferences.Poly = (int)pS.GetComponent<Slider>().value;
+            
+            pB.GetComponent<Button>().interactable = Preferences.Poly is 0;
             pH.GetComponent<Image>().sprite = Preferences.Poly is 1 ? gold : silver;
             pT.GetComponent<TextMeshProUGUI>().text = Preferences.Poly.ToString();
         }
 
         public void PB() => pS.GetComponent<Slider>().value = 1; // PB: Poly Button
+
+        public void Reload() => PlayerPrefs.DeleteAll();
     }
 }
 

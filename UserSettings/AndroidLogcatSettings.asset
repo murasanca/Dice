@@ -1,42 +1,60 @@
 {
     "m_SelectedDeviceId": "521087764678c359",
     "m_SelectedPackage": {
-        "deviceId": "",
-        "name": "",
-        "processId": 0,
+        "deviceId": "521087764678c359",
+        "name": "com.murasanca.Dice",
+        "processId": 25907,
         "exited": false
     },
     "m_SelectedPriority": 4,
     "m_KnownPackagesForSerialization": [
         {
             "deviceId": "521087764678c359",
-            "name": "com.murasanca.Dice",
-            "processId": 24323,
-            "exited": true
-        },
-        {
-            "deviceId": "521087764678c359",
-            "name": "com.murasanca.Dice",
-            "processId": 24838,
-            "exited": true
-        },
-        {
-            "deviceId": "521087764678c359",
-            "name": "com.murasanca.Dice",
-            "processId": 19390,
-            "exited": true
-        },
-        {
-            "deviceId": "521087764678c359",
-            "name": "com.murasanca.Dice",
-            "processId": 30623,
-            "exited": true
-        },
-        {
-            "deviceId": "521087764678c359",
             "name": "com.sec.android.app.launcher",
-            "processId": 20943,
+            "processId": 4256,
+            "exited": false
+        },
+        {
+            "deviceId": "521087764678c359",
+            "name": "com.murasanca.Dice",
+            "processId": 28238,
             "exited": true
+        },
+        {
+            "deviceId": "521087764678c359",
+            "name": "com.murasanca.Dice",
+            "processId": 30215,
+            "exited": true
+        },
+        {
+            "deviceId": "521087764678c359",
+            "name": "com.murasanca.Dice",
+            "processId": 32156,
+            "exited": true
+        },
+        {
+            "deviceId": "521087764678c359",
+            "name": "com.murasanca.Dice",
+            "processId": 370,
+            "exited": true
+        },
+        {
+            "deviceId": "521087764678c359",
+            "name": "com.murasanca.Dice",
+            "processId": 19482,
+            "exited": true
+        },
+        {
+            "deviceId": "521087764678c359",
+            "name": "com.murasanca.Dice",
+            "processId": 21559,
+            "exited": false
+        },
+        {
+            "deviceId": "521087764678c359",
+            "name": "com.murasanca.Dice",
+            "processId": 25907,
+            "exited": false
         },
         {
             "deviceId": "mvvohaambejzws99",
@@ -126,6 +144,6 @@
         "Behavior": 0
     },
     "m_Filter": "",
-    "m_FilterIsRegularExpression": true,
+    "m_FilterIsRegularExpression": false,
     "m_SymbolPaths": []
 }

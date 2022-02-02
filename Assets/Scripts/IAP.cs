@@ -8,13 +8,11 @@ namespace murasanca
 {
     public class IAP : MonoBehaviour, IStoreListener
     {
-        private static IExtensionProvider extensionProvider;
+        private static IExtensionProvider eP; // eP: Extension Provider.
 
-        private static IStoreController storeController;
+        private static IStoreController sC; // sC: Store Controller.
 
-        public static IAP iap;
-
-        public readonly static string[] nonConsumables = new string[23]
+        public readonly static string[] products = new string[23]
         {
             "com.murasanca.dice.0",
             "com.murasanca.dice.1",
@@ -41,6 +39,10 @@ namespace murasanca
             "com.murasanca.dice.22"
         };
 
+        public static IAP iap;
+
+        // murasanca
+
         private void Awake()
         {
             if (iap is null)
@@ -49,67 +51,61 @@ namespace murasanca
                 Destroy(gameObject);
             DontDestroyOnLoad(iap);
 
-            if (storeController is null)
-                InitializePurchasing();
+            if (sC is null)
+                Initialize();
         }
 
-        public static bool HasReceipt(int p) // p: Product.
+        // murasanca
+
+        public static bool HR(int p) // HR: Has Receipt, p: Product.
         {
-            if (IsInitialized())
-                return storeController.products.WithID(nonConsumables[p]).hasReceipt;
+            if (Initialized())
+                return sC.products.WithID(products[p]).hasReceipt;
             else
                 return false;
         }
 
-        public void InitializePurchasing()
+        public void Initialize()
         {
-            if (IsInitialized())
+            if (Initialized())
                 return;
 
-            ConfigurationBuilder configurationBuilder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
-
-            foreach (string nonConsumable in nonConsumables)
-                configurationBuilder.AddProduct(nonConsumable, ProductType.Consumable);
-
-            UnityPurchasing.Initialize(this, configurationBuilder);
+            ConfigurationBuilder cB = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance()); // cB: Configuration Builder.
+            foreach (string product in products)
+                cB.AddProduct(product, ProductType.Consumable);
+            UnityPurchasing.Initialize(this, cB);
         }
 
-        private static bool IsInitialized() => extensionProvider is not null && storeController is not null;
+        private static bool Initialized() => eP is not null && sC is not null;
 
-        public static void BuyNonConsumable(int p) // p: Product.
+        public static void Checkmark(int product)
         {
-            if (p is not -1)
-                BuyProductID(nonConsumables[p]);
+            if (product is not -1)
+                Buy(products[product]);
             else
-                BuyProductID(nonConsumables[0]);
+                Buy(products[0]);
         }
 
-        private static void BuyProductID(string productId)
+        private static void Buy(string p) // p: Product.
         {
-            if (IsInitialized())
+            if (Initialized())
             {
-                Product product = storeController.products.WithID(productId);
+                Product product = sC.products.WithID(p);
 
                 if (product is not null && product.availableToPurchase)
-                    storeController.InitiatePurchase(product);
+                    sC.InitiatePurchase(product);
                 else
                     Handheld.Vibrate();
             }
             else
-               Handheld.Vibrate();
+                Handheld.Vibrate();
         }
 
-        public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
-        {
-            storeController = controller;
-            extensionProvider = extensions;
-        }
-
-        public void OnInitializeFailed(InitializationFailureReason error) => Handheld.Vibrate();
+        // murasanca
 
         public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs args)
         {
-            if (String.Equals(args.purchasedProduct.definition.id, nonConsumables[0], StringComparison.Ordinal))
+            if (string.Equals(args.purchasedProduct.definition.id, products[0], StringComparison.Ordinal))
             {
                 Bag.Set(-1);
                 Monetization.Hide();
@@ -117,18 +113,27 @@ namespace murasanca
                 return PurchaseProcessingResult.Complete;
             }
 
-            for (int i = 1; i < nonConsumables.Length; i++)
-                if (String.Equals(args.purchasedProduct.definition.id, nonConsumables[i], StringComparison.Ordinal))
+            for (int i = 1; i < products.Length; i++)
+                if (string.Equals(args.purchasedProduct.definition.id, products[i], StringComparison.Ordinal))
                 {
                     Bag.Set();
                     return PurchaseProcessingResult.Complete;
                 }
 
             Handheld.Vibrate();
+
             return PurchaseProcessingResult.Complete;
         }
 
-        public void OnPurchaseFailed(Product product, PurchaseFailureReason failureReason) => Debug.Log(string.Format("OnPurchaseFailed: FAIL. Product: '{0}', PurchaseFailureReason: {1}", product.definition.storeSpecificId, failureReason));
+        public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
+        {
+            eP = extensions;
+            sC = controller;
+        }
+
+        public void OnInitializeFailed(InitializationFailureReason error) => Handheld.Vibrate();
+
+        public void OnPurchaseFailed(Product product, PurchaseFailureReason failureReason) => Handheld.Vibrate();
     }
 }
 
