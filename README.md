@@ -14,3 +14,9 @@ Even high-level dice don't guarantee victory, because skill plays a big part in 
 Will fortune be on your side? Blow the dice and try your luck.
 <br><br>
 If you're rolling the dice, you can give Dice 5 stars.
+<hr>
+<a href="mailto:murasanca@pm.me" target="_blank">murasanca@pm.me</a>
+<br><br>
+Murat Sancak
+<br>
+∞
