@@ -1,16 +1,23 @@
-// murasanca
+// Murat Sancak
 
 using System;
 using UnityEngine;
 using UnityEngine.Purchasing;
+using UnityEngine.SceneManagement;
 
 namespace murasanca
 {
-    public class IAP : MonoBehaviour, IStoreListener
+    public class IAP : MonoBehaviour, IStoreListener // IAP: In-App Purchase.
     {
+        private ConfigurationBuilder cB; // cB: Configuration Builder.
+
         private static IExtensionProvider eP; // eP: Extension Provider.
 
         private static IStoreController sC; // sC: Store Controller.
+
+        private static Product product;
+
+        public static IAP iap; // iap: In-App Purchase.
 
         public readonly static string[] products = new string[23]
         {
@@ -39,9 +46,22 @@ namespace murasanca
             "com.murasanca.dice.22"
         };
 
-        public static IAP iap;
+        // Murat Sancak
 
-        // murasanca
+        public static bool II => eP is not null && sC is not null; // II: Is Initialized.
+
+        private static Product[] Product
+        {
+            get
+            {
+                if (II)
+                    return sC.products.all;
+                else
+                    return null;
+            }
+        }
+
+        // Murat Sancak
 
         private void Awake()
         {
@@ -55,42 +75,13 @@ namespace murasanca
                 Initialize();
         }
 
-        // murasanca
+        // Murat Sancak
 
-        public static bool HR(int p) // HR: Has Receipt, p: Product.
+        private static void Checkmark(string p) // p: Product.
         {
-            if (Initialized())
-                return sC.products.WithID(products[p]).hasReceipt;
-            else
-                return false;
-        }
-
-        public void Initialize()
-        {
-            if (Initialized())
-                return;
-
-            ConfigurationBuilder cB = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance()); // cB: Configuration Builder.
-            foreach (string product in products)
-                cB.AddProduct(product, ProductType.Consumable);
-            UnityPurchasing.Initialize(this, cB);
-        }
-
-        private static bool Initialized() => eP is not null && sC is not null;
-
-        public static void Checkmark(int product)
-        {
-            if (product is not -1)
-                Buy(products[product]);
-            else
-                Buy(products[0]);
-        }
-
-        private static void Buy(string p) // p: Product.
-        {
-            if (Initialized())
+            if (II)
             {
-                Product product = sC.products.WithID(p);
+                product = sC.products.WithID(p);
 
                 if (product is not null && product.availableToPurchase)
                     sC.InitiatePurchase(product);
@@ -101,7 +92,34 @@ namespace murasanca
                 Handheld.Vibrate();
         }
 
-        // murasanca
+        public void Initialize()
+        {
+            if (II)
+                return;
+
+            cB = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
+            foreach (string product in products)
+                cB.AddProduct(product, ProductType.NonConsumable);
+            UnityPurchasing.Initialize(iap, cB);
+        }
+
+        public static bool HR(int p) // HR: Has Receipt, p: Product.
+        {
+            if (II)
+                return sC.products.WithID(products[p]).hasReceipt;
+            else
+                return false;
+        }
+
+        public static void Checkmark(int product)
+        {
+            if (product is not -1)
+                Checkmark(products[product]);
+            else
+                Checkmark(products[0]);
+        }
+
+        // Murat Sancak
 
         public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs args)
         {
@@ -133,8 +151,14 @@ namespace murasanca
 
         public void OnInitializeFailed(InitializationFailureReason error) => Handheld.Vibrate();
 
-        public void OnPurchaseFailed(Product product, PurchaseFailureReason failureReason) => Handheld.Vibrate();
+        public void OnPurchaseFailed(Product p, PurchaseFailureReason pFR) // p: Product, pFR: Purchase Failure Reason.
+        {
+            Handheld.Vibrate();
+
+            if (SceneManager.GetActiveScene().buildIndex is 2) // Settings.
+                Bag.Close();
+        }
     }
 }
 
-// murasanca
+// Murat Sancak

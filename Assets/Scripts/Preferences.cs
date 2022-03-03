@@ -1,4 +1,4 @@
-// murasanca
+// Murat Sancak
 
 using UnityEngine;
 
@@ -6,17 +6,51 @@ namespace murasanca
 {
     public class Preferences : PlayerPrefs
     {
-        private readonly static float pitch, volume;
+        private readonly static float
+            p, // p: Pitch.
+            v; // v: Volume.
 
         private readonly static int dD, d4, d6, d8, d10, d12, d20, poly;
 
-        // murasanca
+        // Murat Sancak
+
+        public static float P // P: Pitch.
+        {
+            get
+            {
+                if (!HasKey("p"))
+                    Time.timeScale = Mathf.Abs(P = 1);
+                return GetFloat("p", p);
+            }
+            set
+            {
+                SetFloat("p", value);
+                Save();
+
+                Time.timeScale = Mathf.Abs(P);
+            }
+        }
+
+        public static float V // V: Volume.
+        {
+            get
+            {
+                if (!HasKey("v"))
+                    V = .64f;
+                return GetFloat("v", v);
+            }
+            set
+            {
+                SetFloat("v", value);
+                Save();
+            }
+        }
 
         public static int DD
         {
             get
             {
-                if (!IAP.HR(dD) && dD is not 0 || !HasKey("dD"))
+                if (!HasKey("dD") || !IAP.HR(dD) && dD is not 0)
                     DD = 0;
                 return GetInt("dD", dD);
             }
@@ -30,7 +64,7 @@ namespace murasanca
         {
             get
             {
-                if (!IAP.HR(d4) && d4 is not 0 || !HasKey("d4"))
+                if (!HasKey("d4") || !IAP.HR(d4) && d4 is not 0)
                     D4 = 0;
                 return GetInt("d4", d4);
             }
@@ -44,7 +78,7 @@ namespace murasanca
         {
             get
             {
-                if (!IAP.HR(d6) && d6 is not 0 || !HasKey("d6"))
+                if (!HasKey("d6") || !IAP.HR(d6) && d6 is not 0)
                     D6 = 0;
                 return GetInt("d6", d6);
             }
@@ -58,7 +92,7 @@ namespace murasanca
         {
             get
             {
-                if (!IAP.HR(d8) && d8 is not 0 || !HasKey("d8"))
+                if (!HasKey("d8") || !IAP.HR(d8) && d8 is not 0)
                     D8 = 0;
                 return GetInt("d8", d8);
             }
@@ -72,7 +106,7 @@ namespace murasanca
         {
             get
             {
-                if (!IAP.HR(d10) && d10 is not 0 || !HasKey("d10"))
+                if (!HasKey("d10") || !IAP.HR(d10) && d10 is not 0)
                     D10 = 0;
                 return GetInt("d10", d10);
             }
@@ -86,7 +120,7 @@ namespace murasanca
         {
             get
             {
-                if (!IAP.HR(d12) && d12 is not 0 || !HasKey("d12"))
+                if (!HasKey("d12") || !IAP.HR(d12) && d12 is not 0)
                     D12 = 0;
                 return GetInt("d12", d12);
             }
@@ -100,42 +134,13 @@ namespace murasanca
         {
             get
             {
-                if (!IAP.HR(d20) && d20 is not 0 || !HasKey("d20"))
+                if (!HasKey("d20") || !IAP.HR(d20) && d20 is not 0)
                     D20 = 0;
                 return GetInt("d20", d20);
             }
             set
             {
                 SetInt("d20", value);
-                Save();
-            }
-        }
-
-        public static float Pitch
-        {
-            get
-            {
-                if (!HasKey("pitch"))
-                    Pitch = 1;
-                return GetFloat("pitch", pitch);
-            }
-            set
-            {
-                SetFloat("pitch", value);
-                Save();
-            }
-        }
-        public static float Volume
-        {
-            get
-            {
-                if (!HasKey("volume"))
-                    Volume = .64f;
-                return GetFloat("volume", volume);
-            }
-            set
-            {
-                SetFloat("volume", value);
                 Save();
             }
         }
@@ -157,4 +162,4 @@ namespace murasanca
     }
 }
 
-// murasanca
+// Murat Sancak

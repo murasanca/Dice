@@ -109,7 +109,7 @@ namespace murasanca
                 vector2s1[i] = gameObjects[i].GetComponent<RectTransform>().anchoredPosition;
             }
 
-            if (!Monetization.IRL || IAP.HR(0))
+            if (!Monetization.iRL || IAP.HR(0))
             {
                 dDA.SetActive(false);
                 dDU.SetActive(true);
@@ -126,7 +126,7 @@ namespace murasanca
                 d20A.SetActive(false);
                 d20U.SetActive(true);
             }
-            else if (Monetization.IRL)
+            else if (Monetization.iRL)
             {
                 dDA.SetActive(true);
                 dDU.SetActive(false);
@@ -160,7 +160,7 @@ namespace murasanca
             d20s.Clear();
             dices.Clear();
 
-            Time.timeScale = Mathf.Abs(Preferences.Pitch);
+            Time.timeScale = Mathf.Abs(Preferences.P);
         }
 
         private void Start()
@@ -213,7 +213,7 @@ namespace murasanca
                 else
                     upperPanel.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 346);
 
-                if (!Monetization.IRL || IAP.HR(0))
+                if (!Monetization.iRL || IAP.HR(0))
                 {
                     if (dDs.Count is 1)
                     {

@@ -852,7 +852,7 @@ PlayerSettings:
   XboxOneOverrideIdentityPublisher: 
   vrEditorSettings: {}
   cloudServicesEnabled:
-    Collab: 1
+    Collab: 0
     Game Performance: 1
     Unity Ads: 1
   luminIcon:

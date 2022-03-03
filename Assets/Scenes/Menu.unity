@@ -442,7 +442,7 @@ GameObject:
   - component: {fileID: 181004043}
   - component: {fileID: 181004044}
   m_Layer: 0
-  m_Name: Monetization
+  m_Name: Monetization Game Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1243,7 +1243,7 @@ GameObject:
   - component: {fileID: 876409365}
   - component: {fileID: 876409364}
   m_Layer: 0
-  m_Name: IAP Listener
+  m_Name: IAP Listener Game Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2517,7 +2517,7 @@ GameObject:
   - component: {fileID: 2144608306}
   - component: {fileID: 2144608305}
   m_Layer: 0
-  m_Name: Play Services Game Object
+  m_Name: Play Games Game Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

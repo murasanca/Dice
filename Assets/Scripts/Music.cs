@@ -21,8 +21,8 @@ namespace murasanca
 
         private void Start()
         {
-            GetComponent<AudioSource>().volume = Preferences.Volume;
-            Time.timeScale = Mathf.Abs(GetComponent<AudioSource>().pitch = Preferences.Pitch);
+            GetComponent<AudioSource>().volume = Preferences.V;
+            Time.timeScale = Mathf.Abs(GetComponent<AudioSource>().pitch = Preferences.P);
         }
     }
 }

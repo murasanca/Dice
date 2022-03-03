@@ -59,11 +59,11 @@ namespace murasanca
                 vector2s1[i] = gameObjects[i].GetComponent<RectTransform>().anchoredPosition;
             }
 
-            mVB.GetComponent<Button>().interactable = Preferences.Volume is .64f;
-            mPB.GetComponent<Button>().interactable = Preferences.Pitch is 1;
+            mVB.GetComponent<Button>().interactable = Preferences.V is .64f;
+            mPB.GetComponent<Button>().interactable = Preferences.P is 1;
 
-            mPS.GetComponent<Slider>().value = Preferences.Pitch;
-            mVS.GetComponent<Slider>().value = Preferences.Volume;
+            mPS.GetComponent<Slider>().value = Preferences.P;
+            mVS.GetComponent<Slider>().value = Preferences.V;
             pS.GetComponent<Slider>().value = Preferences.Poly;
 
             StartCoroutine(Enumerator());
@@ -90,7 +90,7 @@ namespace murasanca
         (
             string.Concat
             (
-                "mailto:murasanca@protonmail.com?subject=Dice&body=%0A%0A%0A%0A%0AStatic Properties%0A%0A%0ABattery Level: ", batteryLevel,
+                "mailto:murasanca@pm.me?subject=Dice&body=%0A%0A%0A%0A%0AStatic Properties%0A%0A%0ABattery Level: ", batteryLevel,
                 "%0ABattery Status: ", batteryStatus,
 
                 "%0A%0AConstant Buffer Offset Alignment: ", constantBufferOffsetAlignment,
@@ -200,18 +200,18 @@ namespace murasanca
 
         public void OnMPVChanged() // MPV: Music Pitch Value.
         {
-            Time.timeScale = Mathf.Abs(Preferences.Pitch = Music.music.GetComponent<AudioSource>().pitch = mPS.GetComponent<Slider>().value);
+            Time.timeScale = Mathf.Abs(Preferences.P = Music.music.GetComponent<AudioSource>().pitch = mPS.GetComponent<Slider>().value);
             
-            mPB.GetComponent<Button>().interactable = Preferences.Pitch is not 1;
-            mPT.GetComponent<TextMeshProUGUI>().text = Preferences.Pitch.ToString("F2");
+            mPB.GetComponent<Button>().interactable = Preferences.P is not 1;
+            mPT.GetComponent<TextMeshProUGUI>().text = Preferences.P.ToString("F2");
         }
 
         public void OnMVVChanged() // MVV: Music Volume Value.
         {
-            Preferences.Volume = Music.music.GetComponent<AudioSource>().volume = mVS.GetComponent<Slider>().value;
+            Preferences.V = Music.music.GetComponent<AudioSource>().volume = mVS.GetComponent<Slider>().value;
             
-            mVB.GetComponent<Button>().interactable = Preferences.Volume is not .64f;
-            mVT.GetComponent<TextMeshProUGUI>().text = Preferences.Volume.ToString("F2");
+            mVB.GetComponent<Button>().interactable = Preferences.V is not .64f;
+            mVT.GetComponent<TextMeshProUGUI>().text = Preferences.V.ToString("F2");
         }
 
         public void OnPVChanged() // PV: Poly Value.
