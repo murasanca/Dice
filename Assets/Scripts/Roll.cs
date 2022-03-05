@@ -52,15 +52,15 @@ namespace murasanca
                         if (Physics.Raycast(Camera.main.ScreenPointToRay(touch.position), out RaycastHit hit))
                             vector3 = hit.point;
 
-                        for (int i = 0; i < Play.dices.Count; i++)
+                        for (int i = 0; i < Play.ds.Count; i++)
                         {
-                            Play.dices[i].GetComponent<Rigidbody>().velocity = 32 * Play.dices[i].transform.forward;
-                            Play.dices[i].transform.LookAt(vector3);
+                            Play.ds[i].GetComponent<Rigidbody>().velocity = 32 * Play.ds[i].transform.forward;
+                            Play.ds[i].transform.LookAt(vector3);
                         }
                     }
                     if (touch.phase is TouchPhase.Canceled or TouchPhase.Ended)
-                        for (int i = 0; i < Play.dices.Count; i++)
-                            Play.dices[i].transform.rotation = Random.rotation;
+                        for (int i = 0; i < Play.ds.Count; i++)
+                            Play.ds[i].transform.rotation = Random.rotation;
                 }
             }
         }

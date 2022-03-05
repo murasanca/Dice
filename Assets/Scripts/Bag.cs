@@ -10,17 +10,17 @@ namespace murasanca
     public class Bag : MonoBehaviour
     {
         [SerializeField]
-        private GameObject[] gameObjects = new GameObject[3];
+        private RectTransform[] rTs = new RectTransform[3]; // rTs: Rect Transforms.
 
         private float x;
 
         private Touch touch;
 
-        private readonly Vector2 banner = Menu.banner;
+        private readonly Vector2 b = Menu.b;
 
         private readonly Vector2[]
-                    vector2s0 = new Vector2[3], // Shield.
-                    vector2s1 = new Vector2[3]; // Advertisement.
+            v2s0 = new Vector2[3], // v2s0: Vector2's 0.
+            v2s1 = new Vector2[3]; // v2s1: Vector2's 1.
 
         private readonly WaitForSeconds wFS = Menu.wFS; // wFS: Wait For Seconds.
 
@@ -44,9 +44,9 @@ namespace murasanca
             get
             {
                 if (!Monetization.IBL || IAP.HR(0))
-                    return vector2s0;
+                    return v2s0;
                 else
-                    return vector2s1;
+                    return v2s1;
             }
         }
 
@@ -64,10 +64,10 @@ namespace murasanca
             productText = GameObject.Find("Product Text (TMP)");
             shieldRawImage = GameObject.Find("Shield Raw Image");
 
-            for (int i = 0; i < gameObjects.Length; i++)
+            for (int i = 0; i < rTs.Length; i++)
             {
-                vector2s0[i] = banner + gameObjects[i].GetComponent<RectTransform>().anchoredPosition;
-                vector2s1[i] = gameObjects[i].GetComponent<RectTransform>().anchoredPosition;
+                v2s0[i] = b + rTs[i].anchoredPosition;
+                v2s1[i] = rTs[i].anchoredPosition;
             }
 
             StartCoroutine(Enumerator());
@@ -93,8 +93,8 @@ namespace murasanca
         {
             while (true)
             {
-                for (int i = 0; i < gameObjects.Length; i++)
-                    gameObjects[i].GetComponent<RectTransform>().anchoredPosition = Vector2s[i];
+                for (int i = 0; i < rTs.Length; i++)
+                    rTs[i].anchoredPosition = Vector2s[i];
 
                 yield return wFS;
             }
@@ -136,7 +136,7 @@ namespace murasanca
 
         public void I() // I: Inventory.
         {
-            Inventory.set = set;
+            Inventory.s = set;
             Scene.Load(3);
         }
 
@@ -147,9 +147,9 @@ namespace murasanca
         public void Lock()
         {
             if (set is not -1)
-                checkmarkButton.GetComponent<IAPButton>().productId = IAP.products[set];
+                checkmarkButton.GetComponent<IAPButton>().productId = IAP.ps[set];
             else
-                checkmarkButton.GetComponent<IAPButton>().productId = IAP.products[0];
+                checkmarkButton.GetComponent<IAPButton>().productId = IAP.ps[0];
 
             checkmarkButton.SetActive(true);
             closeButton.SetActive(true);

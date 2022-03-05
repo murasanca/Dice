@@ -1,32 +1,39 @@
-﻿// murasanca
+﻿// Murat Sancak
 
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace murasanca
 {
     public class Play : MonoBehaviour
     {
         [SerializeField]
-        private GameObject // D: Down.
-            dDD, d4D, d6D, d8D, d10D, d12D, d20D, scoreText, upperPanel;
+        private GameObject dDD, d4D, d6D, d8D, d10D, d12D, d20D; // D: Down.
 
         [SerializeField]
-        private GameObject[] gameObjects = new GameObject[4];
+        private RectTransform
+            sT, // sT: Score Text (TMP).
+            uP; // uP: Upper Panel.
 
-        private int score = 0;
+        [SerializeField]
+        private RectTransform[] rTs = new RectTransform[4]; // rTs: Rect Transforms.
 
-        private readonly Vector2 banner = Menu.banner;
+        private GameObject gO; // gO: Game Object.
+
+        private int s = 0; // s: Score.
+
+        private readonly Vector2 b = Menu.b; // b: Banner.
 
         private readonly Vector2[]
-            vector2s0 = new Vector2[4], // Shield.
-            vector2s1 = new Vector2[4]; // Advertisement.
+            v2s0 = new Vector2[4], // v2s0: Vector2's 0.
+            v2s1 = new Vector2[4]; // v2s1: Vector2's 1.
 
         private readonly WaitForSeconds wFS = new(.1f); // wFS: Wait For Seconds.
 
-        private static GameObject // A: Ad, U: Up.
+        private static GameObject // A: Advertisement, U: Up.
             dDA, dDU,
             d4A, d4U,
             d6A, d6U,
@@ -34,7 +41,7 @@ namespace murasanca
             d10A, d10U,
             d12A, d12U,
             d20A, d20U,
-            dicesGameObject;
+            dGO; // dGO: Dices Game Object.
 
         private readonly static GameObject[] // HP: High Poly, LP: Low Poly.
             dDHP = Menu.dDHP, dDLP = Menu.dDLP,
@@ -54,10 +61,10 @@ namespace murasanca
             d12s = new List<GameObject>(),
             d20s = new List<GameObject>();
 
-        private readonly static Vector3 vector3 = 1.5f * Vector2.up;
+        private readonly static Vector3 v3 = 1.5f * Vector2.up; // v3: Vector3.
 
         private readonly static Vector3[]
-            vector3s = new Vector3[7]
+            v3s = new Vector3[7] // v3s: Vector3's.
             {
                 new(0, 1.64f, 0), // dD
                 new(8, 1.35f, 0), // d4
@@ -68,22 +75,22 @@ namespace murasanca
                 new(4, 1.64f, 0), // d20
             };
 
-        public static IList<GameObject> dices = new List<GameObject>();
+        public static IList<GameObject> ds = new List<GameObject>(); // ds: Dices.
 
-        // murasanca
+        // Murat Sancak
 
         private Vector2[] Vector2s
         {
             get
             {
                 if (!Monetization.IBL || IAP.HR(0))
-                    return vector2s0;
+                    return v2s0;
                 else
-                    return vector2s1;
+                    return v2s1;
             }
         }
 
-        // murasanca
+        // Murat Sancak
 
         private void Awake()
         {
@@ -101,52 +108,13 @@ namespace murasanca
             d12U = GameObject.Find("D12 Up Button");
             d20A = GameObject.Find("D20 Ad Button");
             d20U = GameObject.Find("D20 Up Button");
-            dicesGameObject = GameObject.Find("Dices Game Object");
+            dGO = GameObject.Find("Dices Game Object");
 
-            for (int i = 0; i < gameObjects.Length; i++)
+            for (int i = 0; i < rTs.Length; i++)
             {
-                vector2s0[i] = banner + gameObjects[i].GetComponent<RectTransform>().anchoredPosition;
-                vector2s1[i] = gameObjects[i].GetComponent<RectTransform>().anchoredPosition;
+                v2s0[i] = b + rTs[i].anchoredPosition;
+                v2s1[i] = rTs[i].anchoredPosition;
             }
-
-            if (!Monetization.iRL || IAP.HR(0))
-            {
-                dDA.SetActive(false);
-                dDU.SetActive(true);
-                d4A.SetActive(false);
-                d4U.SetActive(true);
-                d6A.SetActive(false);
-                d6U.SetActive(true);
-                d8A.SetActive(false);
-                d8U.SetActive(true);
-                d10A.SetActive(false);
-                d10U.SetActive(true);
-                d12A.SetActive(false);
-                d12U.SetActive(true);
-                d20A.SetActive(false);
-                d20U.SetActive(true);
-            }
-            else if (Monetization.iRL)
-            {
-                dDA.SetActive(true);
-                dDU.SetActive(false);
-                d4A.SetActive(true);
-                d4U.SetActive(false);
-                d6A.SetActive(true);
-                d6U.SetActive(false);
-                d8A.SetActive(true);
-                d8U.SetActive(false);
-                d10A.SetActive(true);
-                d10U.SetActive(false);
-                d12A.SetActive(true);
-                d12U.SetActive(false);
-                d20A.SetActive(true);
-                d20U.SetActive(false);
-            }
-
-            StartCoroutine(Enumerator());
-
-            Time.timeScale = 1;
         }
 
         private void OnDestroy()
@@ -158,518 +126,368 @@ namespace murasanca
             d10s.Clear();
             d12s.Clear();
             d20s.Clear();
-            dices.Clear();
-
-            Time.timeScale = Mathf.Abs(Preferences.P);
+            ds.Clear();
         }
 
         private void Start()
         {
             if (Preferences.Poly is 1)
             {
-                Add(Create(dDHP[Preferences.DD], vector3s[0]), dDs);
-                Add(Create(d4HP[Preferences.D4], vector3s[1]), d4s);
-                Add(Create(d6HP[Preferences.D6], vector3s[2]), d6s);
-                Add(Create(d8HP[Preferences.D8], vector3s[3]), d8s);
-                Add(Create(d10HP[Preferences.D10], vector3s[4]), d10s);
-                Add(Create(d12HP[Preferences.D12], vector3s[5]), d12s);
-                Add(Create(d20HP[Preferences.D20], vector3s[6]), d20s);
+                Add(Create(dDHP[Preferences.DD], v3s[0]), dDs);
+                Add(Create(d4HP[Preferences.D4], v3s[1]), d4s);
+                Add(Create(d6HP[Preferences.D6], v3s[2]), d6s);
+                Add(Create(d8HP[Preferences.D8], v3s[3]), d8s);
+                Add(Create(d10HP[Preferences.D10], v3s[4]), d10s);
+                Add(Create(d12HP[Preferences.D12], v3s[5]), d12s);
+                Add(Create(d20HP[Preferences.D20], v3s[6]), d20s);
             }
             else
             {
-                Add(Create(dDLP[Preferences.DD], vector3s[0]), dDs);
-                Add(Create(d4LP[Preferences.D4], vector3s[1]), d4s);
-                Add(Create(d6LP[Preferences.D6], vector3s[2]), d6s);
-                Add(Create(d8LP[Preferences.D8], vector3s[3]), d8s);
-                Add(Create(d12LP[Preferences.D12], vector3s[5]), d12s);
-                Add(Create(d20LP[Preferences.D20], vector3s[6]), d20s);
-                Add(Create(d10LP[Preferences.D10], vector3s[4]), d10s);
+                Add(Create(dDLP[Preferences.DD], v3s[0]), dDs);
+                Add(Create(d4LP[Preferences.D4], v3s[1]), d4s);
+                Add(Create(d6LP[Preferences.D6], v3s[2]), d6s);
+                Add(Create(d8LP[Preferences.D8], v3s[3]), d8s);
+                Add(Create(d12LP[Preferences.D12], v3s[5]), d12s);
+                Add(Create(d20LP[Preferences.D20], v3s[6]), d20s);
+                Add(Create(d10LP[Preferences.D10], v3s[4]), d10s);
             }
 
-            Add(dDs.Last(), dices);
-            Add(d4s.Last(), dices);
-            Add(d6s.Last(), dices);
-            Add(d8s.Last(), dices);
-            Add(d10s.Last(), dices);
-            Add(d12s.Last(), dices);
-            Add(d20s.Last(), dices);
+            Add(dDs.Last(), ds);
+            Add(d4s.Last(), ds);
+            Add(d6s.Last(), ds);
+            Add(d8s.Last(), ds);
+            Add(d10s.Last(), ds);
+            Add(d12s.Last(), ds);
+            Add(d20s.Last(), ds);
+
+            StartCoroutine(Enumerator());
         }
 
-        // murasanca
+        private void Update() => Button(IAP.HR(0), Monetization.iRL);
+
+        // Murat Sancak
 
         private System.Collections.IEnumerator Enumerator()
         {
             while (true)
             {
-                for (int i = 0; i < gameObjects.Length; i++)
-                    gameObjects[i].GetComponent<RectTransform>().anchoredPosition = Vector2s[i];
+                for (int i = 0; i < rTs.Length; i++)
+                    rTs[i].anchoredPosition = Vector2s[i];
 
-                foreach (GameObject dice in dices)
-                    score += dice.GetComponent<Dice>().surface;
-                scoreText.GetComponent<TextMeshProUGUI>().text = score.ToString();
+                foreach (GameObject d in ds) // d: Dice.
+                    s += d.GetComponent<Dice>().surface;
+                sT.GetComponent<TextMeshProUGUI>().text = s.ToString();
 
                 if (!Monetization.IBL || IAP.HR(0))
-                    upperPanel.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 256);
+                    uP.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 256);
                 else
-                    upperPanel.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 346);
+                    uP.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 346);
 
-                if (!Monetization.iRL || IAP.HR(0))
-                {
-                    if (dDs.Count is 1)
-                    {
-                        dDA.SetActive(false);
-                        dDU.SetActive(true);
-                    }
-                    if (d4s.Count is 1)
-                    {
-                        d4A.SetActive(false);
-                        d4U.SetActive(true);
-                    }
-                    if (d6s.Count is 1)
-                    {
-                        d6A.SetActive(false);
-                        d6U.SetActive(true);
-                    }
-                    if (d8s.Count is 1)
-                    {
-                        d8A.SetActive(false);
-                        d8U.SetActive(true);
-                    }
-                    if (d10s.Count is 1)
-                    {
-                        d10A.SetActive(false);
-                        d10U.SetActive(true);
-                    }
-                    if (d12s.Count is 1)
-                    {
-                        d12A.SetActive(false);
-                        d12U.SetActive(true);
-                    }
-                    if (d20s.Count is 1)
-                    {
-                        d20A.SetActive(false);
-                        d20U.SetActive(true);
-                    }
-                }
-                else
-                {
-                    if (dDs.Count is 1)
-                    {
-                        dDA.SetActive(true);
-                        dDU.SetActive(false);
-                    }
-                    if (d4s.Count is 1)
-                    {
-                        d4A.SetActive(true);
-                        d4U.SetActive(false);
-                    }
-                    if (d6s.Count is 1)
-                    {
-                        d6A.SetActive(true);
-                        d6U.SetActive(false);
-                    }
-                    if (d8s.Count is 1)
-                    {
-                        d8A.SetActive(true);
-                        d8U.SetActive(false);
-                    }
-                    if (d10s.Count is 1)
-                    {
-                        d10A.SetActive(true);
-                        d10U.SetActive(false);
-                    }
-                    if (d12s.Count is 1)
-                    {
-                        d12A.SetActive(true);
-                        d12U.SetActive(false);
-                    }
-                    if (d20s.Count is 1)
-                    {
-                        d20A.SetActive(true);
-                        d20U.SetActive(false);
-                    }
-                }
-
-                if (score is 132)
+                if (s is 132)
                 {
                     Handheld.Vibrate();
-                    PG.Progress(132);
+                    PG.Achievement(132);
                 }
-                PG.Progress(dices.Count);
-                PG.Score(score);
+                PG.Achievement(ds.Count);
+                PG.Leaderboard(s);
 
-                score = 0;
+                s = 0;
 
                 yield return wFS;
             }
         }
 
-        // murasanca
+        // Murat Sancak
 
-        private void Remove(GameObject gameObject, IList<GameObject> gameObjects)
+        private void Button(bool a, bool i) // a: Active, i: Interactable.
         {
-            gameObjects.Remove(gameObject);
-            Destroy(gameObject);
+            dDA.GetComponent<Button>().interactable =
+            d4A.GetComponent<Button>().interactable =
+            d6A.GetComponent<Button>().interactable =
+            d8A.GetComponent<Button>().interactable =
+            d10A.GetComponent<Button>().interactable =
+            d12A.GetComponent<Button>().interactable =
+            d20A.GetComponent<Button>().interactable =
+            i;
+
+            dDA.SetActive(!a && dDs.Count is not 2);
+            dDU.SetActive(dDs.Count is not 2 && a);
+            d4A.SetActive(!a && d4s.Count is not 2);
+            d4U.SetActive(d4s.Count is not 2 && a);
+            d6A.SetActive(!a && d6s.Count is not 2);
+            d6U.SetActive(d6s.Count is not 2 && a);
+            d8A.SetActive(!a && d8s.Count is not 2);
+            d8U.SetActive(d8s.Count is not 2 && a);
+            d10A.SetActive(!a && d10s.Count is not 2);
+            d10U.SetActive(d10s.Count is not 2 && a);
+            d12A.SetActive(!a && d12s.Count is not 2);
+            d12U.SetActive(d12s.Count is not 2 && a);
+            d20A.SetActive(!a && d20s.Count is not 2);
+            d20U.SetActive(d20s.Count is not 2 && a);
+
+            dDD.SetActive(dDs.Count is not 0);
+            d4D.SetActive(d4s.Count is not 0);
+            d6D.SetActive(d6s.Count is not 0);
+            d8D.SetActive(d8s.Count is not 0);
+            d10D.SetActive(d10s.Count is not 0);
+            d12D.SetActive(d12s.Count is not 0);
+            d20D.SetActive(d20s.Count is not 0);
+
+            dDU.GetComponent<Button>().interactable =
+            d4U.GetComponent<Button>().interactable =
+            d6U.GetComponent<Button>().interactable =
+            d8U.GetComponent<Button>().interactable =
+            d10U.GetComponent<Button>().interactable =
+            d12U.GetComponent<Button>().interactable =
+            d20U.GetComponent<Button>().interactable =
+            !i;
         }
 
-        private static GameObject Create(GameObject original, Vector3 position) => Instantiate(original, position, Quaternion.identity, dicesGameObject.transform);
+        private void Remove(GameObject gO, IList<GameObject> gOs) // gO: Game Object, gOs: Game Objects.
+        {
+            gOs.Remove(gO);
+            Destroy(gO);
+        }
 
-        private static void Add(GameObject gameObject, IList<GameObject> gameObjects) => gameObjects.Add(gameObject);
+        private static GameObject Create(GameObject gO, Vector3 v3) => Instantiate(gO, v3, Quaternion.identity, dGO.transform); // gO: Game Object, v3: Vector3.
+
+        private static void Add(GameObject gO, IList<GameObject> gOs) => gOs.Add(gO); // gO: Game Object, gOs: Game Objects.
 
         public void DDA() => Monetization.Rewarded(0);
         public void DDD()
         {
-            GameObject gameObject;
             if (dDs.Count is 1)
             {
-                dDA.SetActive(false);
-                dDD.SetActive(false);
-                dDU.SetActive(true);
-
-                gameObject = dDs[0];
-                Remove(gameObject, dDs);
-                Remove(gameObject, dices);
+                gO = dDs[0];
+                Remove(gO, dDs);
+                Remove(gO, ds);
             }
             else // if (dDs.Count is 2)
             {
-                gameObject = dDs[1];
-                Remove(gameObject, dDs);
-                Remove(gameObject, dices);
+                gO = dDs[1];
+                Remove(gO, dDs);
+                Remove(gO, ds);
             }
         }
         public void DDU()
         {
-            if (dDs.Count is 0)
-                dDD.SetActive(true);
-            else // if (dDs.Count is 1)
-            {
-                // dDA.SetActive(false);
-                dDU.SetActive(false);
-                // dDD.SetActive(true);
-            }
-
             if (Preferences.Poly is 1)
-                Add(Create(dDHP[Preferences.DD], vector3s[0] + dDs.Count * vector3), dDs);
+                Add(Create(dDHP[Preferences.DD], v3s[0] + dDs.Count * v3), dDs);
             else
-                Add(Create(dDLP[Preferences.DD], vector3s[0] + dDs.Count * vector3), dDs);
-            Add(dDs.Last(), dices);
+                Add(Create(dDLP[Preferences.DD], v3s[0] + dDs.Count * v3), dDs);
+            Add(dDs.Last(), ds);
         }
 
         public void D4A() => Monetization.Rewarded(4);
         public void D4D()
         {
-            GameObject gameObject;
             if (d4s.Count is 1)
             {
-                d4A.SetActive(false);
-                d4D.SetActive(false);
-                d4U.SetActive(true);
-
-                gameObject = d4s[0];
-                Remove(gameObject, d4s);
-                Remove(gameObject, dices);
+                gO = d4s[0];
+                Remove(gO, d4s);
+                Remove(gO, ds);
             }
             else // if (d4s.Count is 2)
             {
-                gameObject = d4s[1];
-                Remove(gameObject, d4s);
-                Remove(gameObject, dices);
+                gO = d4s[1];
+                Remove(gO, d4s);
+                Remove(gO, ds);
             }
         }
         public void D4U()
         {
-            if (d4s.Count is 0)
-                d4D.SetActive(true);
-            else // if (d4s.Count is 1)
-            {
-                // d4A.SetActive(false);
-                d4U.SetActive(false);
-                // d4D.SetActive(true);
-            }
-
             if (Preferences.Poly is 1)
-                Add(Create(d4HP[Preferences.D4], vector3s[1] + d4s.Count * vector3), d4s);
+                Add(Create(d4HP[Preferences.D4], v3s[1] + d4s.Count * v3), d4s);
             else
-                Add(Create(d4LP[Preferences.D4], vector3s[1] + d4s.Count * vector3), d4s);
-            Add(d4s.Last(), dices);
+                Add(Create(d4LP[Preferences.D4], v3s[1] + d4s.Count * v3), d4s);
+            Add(d4s.Last(), ds);
         }
 
         public void D6A() => Monetization.Rewarded(6);
         public void D6D()
         {
-            GameObject gameObject;
             if (d6s.Count is 1)
             {
-                d6A.SetActive(false);
-                d6D.SetActive(false);
-                d6U.SetActive(true);
-
-                gameObject = d6s[0];
-                Remove(gameObject, d6s);
-                Remove(gameObject, dices);
+                gO = d6s[0];
+                Remove(gO, d6s);
+                Remove(gO, ds);
             }
             else // if (d6s.Count is 2)
             {
-                gameObject = d6s[1];
-                Remove(gameObject, d6s);
-                Remove(gameObject, dices);
+                gO = d6s[1];
+                Remove(gO, d6s);
+                Remove(gO, ds);
             }
         }
         public void D6U()
         {
-            if (d6s.Count is 0)
-                d6D.SetActive(true);
-            else // if (d6s.Count is 1)
-            {
-                // d6A.SetActive(false);
-                d6U.SetActive(false);
-                // d6D.SetActive(true);
-            }
-
             if (Preferences.Poly is 1)
-                Add(Create(d6HP[Preferences.D6], vector3s[2] + d6s.Count * vector3), d6s);
+                Add(Create(d6HP[Preferences.D6], v3s[2] + d6s.Count * v3), d6s);
             else
-                Add(Create(d6LP[Preferences.D6], vector3s[2] + d6s.Count * vector3), d6s);
-            Add(d6s.Last(), dices);
+                Add(Create(d6LP[Preferences.D6], v3s[2] + d6s.Count * v3), d6s);
+            Add(d6s.Last(), ds);
         }
 
         public void D8A() => Monetization.Rewarded(8);
         public void D8D()
         {
-            GameObject gameObject;
             if (d8s.Count is 1)
             {
-                d8A.SetActive(false);
-                d8D.SetActive(false);
-                d8U.SetActive(true);
-
-                gameObject = d8s[0];
-                Remove(gameObject, d8s);
-                Remove(gameObject, dices);
+                gO = d8s[0];
+                Remove(gO, d8s);
+                Remove(gO, ds);
             }
             else // if (d8s.Count is 2)
             {
-                gameObject = d8s[1];
-                Remove(gameObject, d8s);
-                Remove(gameObject, dices);
+                gO = d8s[1];
+                Remove(gO, d8s);
+                Remove(gO, ds);
             }
         }
         public void D8U()
         {
-            if (d8s.Count is 0)
-                d8D.SetActive(true);
-            else // if (d8s.Count is 1)
-            {
-                // d8A.SetActive(false);
-                d8U.SetActive(false);
-                // d8D.SetActive(true);
-            }
-
             if (Preferences.Poly is 1)
-                Add(Create(d8HP[Preferences.D8], vector3s[3] + d8s.Count * vector3), d8s);
+                Add(Create(d8HP[Preferences.D8], v3s[3] + d8s.Count * v3), d8s);
             else
-                Add(Create(d8LP[Preferences.D8], vector3s[3] + d8s.Count * vector3), d8s);
-            Add(d8s.Last(), dices);
+                Add(Create(d8LP[Preferences.D8], v3s[3] + d8s.Count * v3), d8s);
+            Add(d8s.Last(), ds);
         }
 
         public void D10A() => Monetization.Rewarded(10);
         public void D10D()
         {
-            GameObject gameObject;
             if (d10s.Count is 1)
             {
-                d10A.SetActive(false);
-                d10D.SetActive(false);
-                d10U.SetActive(true);
-
-                gameObject = d10s[0];
-                Remove(gameObject, d10s);
-                Remove(gameObject, dices);
+                gO = d10s[0];
+                Remove(gO, d10s);
+                Remove(gO, ds);
             }
             else // if (d10s.Count is 2)
             {
-                gameObject = d10s[1];
-                Remove(gameObject, d10s);
-                Remove(gameObject, dices);
+                gO = d10s[1];
+                Remove(gO, d10s);
+                Remove(gO, ds);
             }
         }
         public void D10U()
         {
-            if (d10s.Count is 0)
-                d10D.SetActive(true);
-            else // if (d10s.Count is 1)
-            {
-                // d10A.SetActive(false);
-                d10U.SetActive(false);
-                // d10D.SetActive(true);
-            }
-
             if (Preferences.Poly is 1)
-                Add(Create(d10HP[Preferences.D10], vector3s[4] + d10s.Count * vector3), d10s);
+                Add(Create(d10HP[Preferences.D10], v3s[4] + d10s.Count * v3), d10s);
             else
-                Add(Create(d10LP[Preferences.D10], vector3s[4] + d10s.Count * vector3), d10s);
-            Add(d10s.Last(), dices);
+                Add(Create(d10LP[Preferences.D10], v3s[4] + d10s.Count * v3), d10s);
+            Add(d10s.Last(), ds);
         }
 
         public void D12A() => Monetization.Rewarded(12);
         public void D12D()
         {
-            GameObject gameObject;
             if (d12s.Count is 1)
             {
-                d12A.SetActive(false);
-                d12D.SetActive(false);
-                d12U.SetActive(true);
-
-                gameObject = d12s[0];
-                Remove(gameObject, d12s);
-                Remove(gameObject, dices);
+                gO = d12s[0];
+                Remove(gO, d12s);
+                Remove(gO, ds);
             }
             else // if (d12s.Count is 2)
             {
-                gameObject = d12s[1];
-                Remove(gameObject, d12s);
-                Remove(gameObject, dices);
+                gO = d12s[1];
+                Remove(gO, d12s);
+                Remove(gO, ds);
             }
         }
         public void D12U()
         {
-            if (d12s.Count is 0)
-                d12D.SetActive(true);
-            else // if (d12s.Count is 1)
-            {
-                // d12A.SetActive(false);
-                d12U.SetActive(false);
-                // d12D.SetActive(true);
-            }
-
             if (Preferences.Poly is 1)
-                Add(Create(d12HP[Preferences.D12], vector3s[5] + d12s.Count * vector3), d12s);
+                Add(Create(d12HP[Preferences.D12], v3s[5] + d12s.Count * v3), d12s);
             else
-                Add(Create(d12LP[Preferences.D12], vector3s[5] + d12s.Count * vector3), d12s);
-            Add(d12s.Last(), dices);
+                Add(Create(d12LP[Preferences.D12], v3s[5] + d12s.Count * v3), d12s);
+            Add(d12s.Last(), ds);
         }
 
         public void D20A() => Monetization.Rewarded(20);
         public void D20D()
         {
-            GameObject gameObject;
             if (d20s.Count is 1)
             {
-                d20A.SetActive(false);
-                d20D.SetActive(false);
-                d20U.SetActive(true);
-
-                gameObject = d20s[0];
-                Remove(gameObject, d20s);
-                Remove(gameObject, dices);
+                gO = d20s[0];
+                Remove(gO, d20s);
+                Remove(gO, ds);
             }
             else // if (d20s.Count is 2)
             {
-                gameObject = d20s[1];
-                Remove(gameObject, d20s);
-                Remove(gameObject, dices);
+                gO = d20s[1];
+                Remove(gO, d20s);
+                Remove(gO, ds);
             }
         }
         public void D20U()
         {
-            if (d20s.Count is 0)
-                d20D.SetActive(true);
-            else // if (d20s.Count is 1)
-            {
-                // d20A.SetActive(false);
-                d20U.SetActive(false);
-                // d20D.SetActive(true);
-            }
-
             if (Preferences.Poly is 1)
-                Add(Create(d20HP[Preferences.D20], vector3s[6] + d20s.Count * vector3), d20s);
+                Add(Create(d20HP[Preferences.D20], v3s[6] + d20s.Count * v3), d20s);
             else
-                Add(Create(d20LP[Preferences.D20], vector3s[6] + d20s.Count * vector3), d20s);
-            Add(d20s.Last(), dices);
+                Add(Create(d20LP[Preferences.D20], v3s[6] + d20s.Count * v3), d20s);
+            Add(d20s.Last(), ds);
         }
 
-        public void Load(int scene) => Scene.Load(scene);
+        public void Load(int s) => Scene.Load(s); // s: Scene.
 
-        public void Pause(bool pause) => Time.timeScale = pause ? 0 : 1;
+        public void Pause(bool p) => Time.timeScale = p ? 0 : 1; // p: Pause.
 
-        public static void Reward(int button)
+        public static void Reward(int b) // b: Button.
         {
-            switch (button)
+            switch (b)
             {
                 case 0:
                     if (Preferences.Poly is 1)
-                        Add(Create(dDHP[Preferences.DD], vector3s[0] + dDs.Count * vector3), dDs);
+                        Add(Create(dDHP[Preferences.DD], v3s[0] + dDs.Count * v3), dDs);
                     else
-                        Add(Create(dDLP[Preferences.DD], vector3s[0] + dDs.Count * vector3), dDs);
-                    Add(dDs.Last(), dices);
-
-                    dDA.SetActive(false);
-                    dDU.SetActive(false);
+                        Add(Create(dDLP[Preferences.DD], v3s[0] + dDs.Count * v3), dDs);
+                    Add(dDs.Last(), ds);
                     break;
                 case 4:
                     if (Preferences.Poly is 1)
-                        Add(Create(d4HP[Preferences.D4], vector3s[1] + d4s.Count * vector3), d4s);
+                        Add(Create(d4HP[Preferences.D4], v3s[1] + d4s.Count * v3), d4s);
                     else
-                        Add(Create(d4LP[Preferences.D4], vector3s[1] + d4s.Count * vector3), d4s);
-                    Add(d4s.Last(), dices);
-
-                    d4A.SetActive(false);
-                    d4U.SetActive(false);
+                        Add(Create(d4LP[Preferences.D4], v3s[1] + d4s.Count * v3), d4s);
+                    Add(d4s.Last(), ds);
                     break;
                 case 6:
                     if (Preferences.Poly is 1)
-                        Add(Create(d6HP[Preferences.D6], vector3s[2] + d6s.Count * vector3), d6s);
+                        Add(Create(d6HP[Preferences.D6], v3s[2] + d6s.Count * v3), d6s);
                     else
-                        Add(Create(d6LP[Preferences.D6], vector3s[2] + d6s.Count * vector3), d6s);
-                    Add(d6s.Last(), dices);
-
-                    d6A.SetActive(false);
-                    d6U.SetActive(false);
+                        Add(Create(d6LP[Preferences.D6], v3s[2] + d6s.Count * v3), d6s);
+                    Add(d6s.Last(), ds);
                     break;
                 case 8:
                     if (Preferences.Poly is 1)
-                        Add(Create(d8HP[Preferences.D8], vector3s[3] + d8s.Count * vector3), d8s);
+                        Add(Create(d8HP[Preferences.D8], v3s[3] + d8s.Count * v3), d8s);
                     else
-                        Add(Create(d8LP[Preferences.D8], vector3s[3] + d8s.Count * vector3), d8s);
-                    Add(d8s.Last(), dices);
-
-                    d8A.SetActive(false);
-                    d8U.SetActive(false);
+                        Add(Create(d8LP[Preferences.D8], v3s[3] + d8s.Count * v3), d8s);
+                    Add(d8s.Last(), ds);
                     break;
                 case 10:
                     if (Preferences.Poly is 1)
-                        Add(Create(d10HP[Preferences.D10], vector3s[4] + d10s.Count * vector3), d10s);
+                        Add(Create(d10HP[Preferences.D10], v3s[4] + d10s.Count * v3), d10s);
                     else
-                        Add(Create(d10LP[Preferences.D10], vector3s[4] + d10s.Count * vector3), d10s);
-                    Add(d10s.Last(), dices);
-
-                    d10A.SetActive(false);
-                    d10U.SetActive(false);
+                        Add(Create(d10LP[Preferences.D10], v3s[4] + d10s.Count * v3), d10s);
+                    Add(d10s.Last(), ds);
                     break;
                 case 12:
                     if (Preferences.Poly is 1)
-                        Add(Create(d12HP[Preferences.D12], vector3s[5] + d12s.Count * vector3), d12s);
+                        Add(Create(d12HP[Preferences.D12], v3s[5] + d12s.Count * v3), d12s);
                     else
-                        Add(Create(d12LP[Preferences.D12], vector3s[5] + d12s.Count * vector3), d12s);
-                    Add(d12s.Last(), dices);
-
-                    d12A.SetActive(false);
-                    d12U.SetActive(false);
+                        Add(Create(d12LP[Preferences.D12], v3s[5] + d12s.Count * v3), d12s);
+                    Add(d12s.Last(), ds);
                     break;
                 case 20:
                     if (Preferences.Poly is 1)
-                        Add(Create(d20HP[Preferences.D20], vector3s[6] + d20s.Count * vector3), d20s);
+                        Add(Create(d20HP[Preferences.D20], v3s[6] + d20s.Count * v3), d20s);
                     else
-                        Add(Create(d20LP[Preferences.D20], vector3s[6] + d20s.Count * vector3), d20s);
-                    Add(d20s.Last(), dices);
-
-                    d20A.SetActive(false);
-                    d20U.SetActive(false);
+                        Add(Create(d20LP[Preferences.D20], v3s[6] + d20s.Count * v3), d20s);
+                    Add(d20s.Last(), ds);
                     break;
             }
         }
     }
 }
 
-// murasanca
+// Murat Sancak

@@ -155,7 +155,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1987086570}
-  m_RootOrder: 4
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -227,7 +227,7 @@ GameObject:
   m_Component:
   - component: {fileID: 335038092}
   m_Layer: 5
-  m_Name: Music Pitch Handle Slide Area
+  m_Name: Pitch Handle Slide Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -245,7 +245,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 464488507}
   - {fileID: 482986869}
   - {fileID: 636771628}
   m_Father: {fileID: 544761940}
@@ -267,7 +266,7 @@ GameObject:
   - component: {fileID: 423660095}
   - component: {fileID: 423660096}
   m_Layer: 5
-  m_Name: Music Volume Slider
+  m_Name: Volume Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -289,13 +288,13 @@ RectTransform:
   - {fileID: 1829180096}
   - {fileID: 854171675}
   m_Father: {fileID: 1987086570}
-  m_RootOrder: 6
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -96, y: 320}
+  m_AnchoredPosition: {x: -128, y: 320}
   m_SizeDelta: {x: 64, y: 512}
-  m_Pivot: {x: 1, y: 0}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &423660096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -349,7 +348,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 888156412}
         m_TargetAssemblyTypeName: murasanca.Settings, Assembly-CSharp
-        m_MethodName: OnMVVChanged
+        m_MethodName: VV
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -373,7 +372,7 @@ GameObject:
   - component: {fileID: 464488510}
   - component: {fileID: 464488509}
   m_Layer: 5
-  m_Name: Music Pitch Button
+  m_Name: Pitch Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -391,12 +390,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 335038092}
-  m_RootOrder: 0
+  m_Father: {fileID: 1987086570}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: -192}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 128, y: 128}
   m_SizeDelta: {x: 128, y: 128}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &464488508
@@ -445,7 +444,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 888156412}
         m_TargetAssemblyTypeName: murasanca.Settings, Assembly-CSharp
-        m_MethodName: MPB
+        m_MethodName: PB
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -526,7 +525,7 @@ GameObject:
   - component: {fileID: 482986871}
   - component: {fileID: 482986870}
   m_Layer: 5
-  m_Name: Music Pitch Handle
+  m_Name: Pitch Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -545,7 +544,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 335038092}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -623,7 +622,7 @@ GameObject:
   - component: {fileID: 484055483}
   - component: {fileID: 484055482}
   m_Layer: 5
-  m_Name: Music Volume Text (TMP)
+  m_Name: Volume Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -642,7 +641,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 854171675}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -779,7 +778,7 @@ GameObject:
   - component: {fileID: 489357429}
   - component: {fileID: 489357428}
   m_Layer: 5
-  m_Name: Music Pitch Fill
+  m_Name: Pitch Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -854,7 +853,7 @@ GameObject:
   - component: {fileID: 544761940}
   - component: {fileID: 544761941}
   m_Layer: 5
-  m_Name: Music Pitch Slider
+  m_Name: Pitch Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -876,13 +875,13 @@ RectTransform:
   - {fileID: 589650322}
   - {fileID: 335038092}
   m_Father: {fileID: 1987086570}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 96, y: 320}
+  m_AnchoredPosition: {x: 128, y: 320}
   m_SizeDelta: {x: 64, y: 512}
-  m_Pivot: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &544761941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -936,7 +935,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 888156412}
         m_TargetAssemblyTypeName: murasanca.Settings, Assembly-CSharp
-        m_MethodName: OnMPVChanged
+        m_MethodName: PV
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -957,7 +956,7 @@ GameObject:
   - component: {fileID: 589650322}
   - component: {fileID: 589650323}
   m_Layer: 5
-  m_Name: Music Pitch Fill Area
+  m_Name: Pitch Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1017,7 +1016,7 @@ GameObject:
   - component: {fileID: 636771627}
   - component: {fileID: 636771626}
   m_Layer: 5
-  m_Name: Music Pitch Text (TMP)
+  m_Name: Pitch Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1134,7 +1133,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 335038092}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -1173,7 +1172,7 @@ GameObject:
   - component: {fileID: 642198590}
   - component: {fileID: 642198589}
   m_Layer: 5
-  m_Name: Music Volume Fill
+  m_Name: Volume Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1323,7 +1322,7 @@ GameObject:
   m_Component:
   - component: {fileID: 854171675}
   m_Layer: 5
-  m_Name: Music Volume Handle Slide Area
+  m_Name: Volume Handle Slide Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1341,7 +1340,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1844442195}
   - {fileID: 1875677916}
   - {fileID: 484055481}
   m_Father: {fileID: 423660095}
@@ -1449,22 +1447,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52f276cea81767c4fad789ee90a2c8c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mPB: {fileID: 464488506}
-  mPS: {fileID: 544761939}
-  mPT: {fileID: 636771625}
-  mVB: {fileID: 1844442194}
-  mVS: {fileID: 423660094}
-  mVT: {fileID: 484055480}
-  pB: {fileID: 1868888519}
-  pH: {fileID: 1482244389}
-  pS: {fileID: 1320249933}
-  pT: {fileID: 1606767739}
-  gameObjects:
-  - {fileID: 1549840935}
-  - {fileID: 1042841789}
-  - {fileID: 126985914}
-  gold: {fileID: 21300000, guid: ab1612db47cae0d48a4c0c1b1fca5abd, type: 3}
-  silver: {fileID: 21300000, guid: 7337680665671b141a96c545e5cf6b6a, type: 3}
+  pB: {fileID: 464488508}
+  polyB: {fileID: 1868888521}
+  vB: {fileID: 1844442196}
+  polyH: {fileID: 1482244391}
+  rTs:
+  - {fileID: 1549840936}
+  - {fileID: 1042841790}
+  - {fileID: 126985915}
+  pS: {fileID: 544761941}
+  polyS: {fileID: 1320249935}
+  vS: {fileID: 423660096}
+  g: {fileID: 21300000, guid: ab1612db47cae0d48a4c0c1b1fca5abd, type: 3}
+  s: {fileID: 21300000, guid: 7337680665671b141a96c545e5cf6b6a, type: 3}
+  pTMPUGUI: {fileID: 636771626}
+  polyTMPUGUI: {fileID: 1606767741}
+  vTMPUGUI: {fileID: 484055482}
 --- !u!1 &902687540
 GameObject:
   m_ObjectHideFlags: 0
@@ -1557,7 +1555,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1987086570}
-  m_RootOrder: 3
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -1736,7 +1734,7 @@ RectTransform:
   - {fileID: 902687541}
   - {fileID: 1377580590}
   m_Father: {fileID: 1987086570}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -1796,7 +1794,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 888156412}
         m_TargetAssemblyTypeName: murasanca.Settings, Assembly-CSharp
-        m_MethodName: OnPVChanged
+        m_MethodName: PolyV
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1988,7 +1986,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1868888520}
   - {fileID: 1482244390}
   - {fileID: 1606767740}
   m_Father: {fileID: 1320249934}
@@ -2031,7 +2028,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1377580590}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2282,7 +2279,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1377580590}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -2419,7 +2416,7 @@ GameObject:
   - component: {fileID: 1725308817}
   - component: {fileID: 1725308816}
   m_Layer: 5
-  m_Name: Music Volume Background
+  m_Name: Volume Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2567,7 +2564,7 @@ GameObject:
   - component: {fileID: 1829180096}
   - component: {fileID: 1829180097}
   m_Layer: 5
-  m_Name: Music Volume Fill Area
+  m_Name: Volume Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2628,7 +2625,7 @@ GameObject:
   - component: {fileID: 1844442198}
   - component: {fileID: 1844442197}
   m_Layer: 5
-  m_Name: Music Volume Button
+  m_Name: Volume Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2646,12 +2643,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 854171675}
-  m_RootOrder: 0
+  m_Father: {fileID: 1987086570}
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: -192}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -128, y: 128}
   m_SizeDelta: {x: 128, y: 128}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1844442196
@@ -2700,7 +2697,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 888156412}
         m_TargetAssemblyTypeName: murasanca.Settings, Assembly-CSharp
-        m_MethodName: MVB
+        m_MethodName: VB
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2800,14 +2797,14 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1377580590}
-  m_RootOrder: 0
+  m_Father: {fileID: 1987086570}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 224}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 448}
   m_SizeDelta: {x: 128, y: 128}
-  m_Pivot: {x: 0.5, y: 1}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1868888521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2854,7 +2851,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 888156412}
         m_TargetAssemblyTypeName: murasanca.Settings, Assembly-CSharp
-        m_MethodName: PB
+        m_MethodName: PolyB
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2935,7 +2932,7 @@ GameObject:
   - component: {fileID: 1875677918}
   - component: {fileID: 1875677917}
   m_Layer: 5
-  m_Name: Music Volume Handle
+  m_Name: Volume Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2954,7 +2951,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 854171675}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3031,7 +3028,7 @@ GameObject:
   - component: {fileID: 1902486765}
   - component: {fileID: 1902486764}
   m_Layer: 5
-  m_Name: Music Pitch Background
+  m_Name: Pitch Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3190,11 +3187,14 @@ RectTransform:
   - {fileID: 1745523741}
   - {fileID: 1366045287}
   - {fileID: 1549840936}
+  - {fileID: 464488507}
+  - {fileID: 544761940}
+  - {fileID: 1868888520}
+  - {fileID: 1320249934}
   - {fileID: 1042841790}
   - {fileID: 126985915}
-  - {fileID: 544761940}
+  - {fileID: 1844442195}
   - {fileID: 423660095}
-  - {fileID: 1320249934}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

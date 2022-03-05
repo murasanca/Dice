@@ -34,7 +34,7 @@ namespace murasanca
             iRL = false, // iRL: is Rewarded Loaded.
 
             // iBS = false, // iBS: Is Banner Showing.
-            // iIS = false, // iIS: Is Interstitial Showing.
+            iIS = false, // iIS: Is Interstitial Showing.
             iRS = false; // iRS: Is Rewarded Showing.
 
         private static int button = -1, s = -1; // s: Scene.
@@ -107,14 +107,12 @@ namespace murasanca
 
         public static void Rewarded(int b) // b: Button.
         {
-            if (!iRL || IAP.HR(0))
-                Play.Reward(Monetization.button = b);
-            else
-            {
-                Monetization.button = b;
+            button = b;
 
+            if (!iRL || IAP.HR(0))
+                Play.Reward(button);
+            else
                 Advertisement.Show(r, m);
-            }
         }
 
         // Murat Sancak
@@ -161,14 +159,14 @@ namespace murasanca
                     Advertisement.Banner.Show(b);
                     break;
                 case i:
-                    iIL = false;
-
                     Advertisement.Load(i, m);
+
+                    iIL = false;
                     break;
                 case r:
-                    iRL = false;
-
                     Advertisement.Load(r, m);
+
+                    iRL = false;
                     break;
                 default:
                     break;
@@ -196,9 +194,10 @@ namespace murasanca
                     if (!iIL)
                         Advertisement.Load(i, m);
 
-                    // iIS = false;
+                    if(iIS)
+                        Scene.Reward(s);
 
-                    Scene.Reward(s);
+                    iIS = false;
                     break;
                 case r:
                     if (!iRL)
@@ -206,7 +205,7 @@ namespace murasanca
 
                     if (iRS && uASCS is UnityAdsShowCompletionState.COMPLETED)
                         Play.Reward(button);
-                    else // showCompletionState is UnityAdsShowCompletionState.SKIPPED || showCompletionState is UnityAdsShowCompletionState.UNKNOWN
+                    else // if(uASCS is UnityAdsShowCompletionState.SKIPPED || uASCS is UnityAdsShowCompletionState.UNKNOWN)
                         Handheld.Vibrate();
 
                     iRS = false;
@@ -237,7 +236,7 @@ namespace murasanca
                     if (!iIL)
                         Advertisement.Load(i, m);
 
-                    // iIS = false;
+                    iIS = false;
                     break;
                 case r:
                     Handheld.Vibrate();
@@ -262,7 +261,7 @@ namespace murasanca
                     // iBS = true;
                     break;
                 case i:
-                    // iIS = true;
+                    iIS = true;
                     break;
                 case r:
                     iRS = true;

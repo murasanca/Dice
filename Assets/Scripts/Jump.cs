@@ -22,27 +22,27 @@ namespace murasanca
                 Handheld.Vibrate();
 
                 if (vector3.x is not 0)
-                    for (int i = 0; i < Play.dices.Count; i++)
+                    for (int i = 0; i < Play.ds.Count; i++)
                     {
-                        Play.dices[i].transform.rotation = Random.rotation;
-                        r = Play.dices[i].GetComponent<Rigidbody>();
+                        Play.ds[i].transform.rotation = Random.rotation;
+                        r = Play.ds[i].GetComponent<Rigidbody>();
                         r.AddForce(force * vector3.x * Vector3.back);
                         r.AddTorque(force * new Vector3(Random.value, Random.value, Random.value));
                     }
                 if (vector3.y is not 0)
-                    for (int i = 0; i < Play.dices.Count; i++)
+                    for (int i = 0; i < Play.ds.Count; i++)
                     {
-                        Play.dices[i].transform.rotation = Random.rotation;
-                        r = Play.dices[i].GetComponent<Rigidbody>();
+                        Play.ds[i].transform.rotation = Random.rotation;
+                        r = Play.ds[i].GetComponent<Rigidbody>();
                         r.AddForce(force * vector3.y * Vector3.right);
                         r.AddTorque(force * new Vector3(Random.value, Random.value, Random.value));
 
                     }
                 if (vector3.z is not 0)
-                    for (int i = 0; i < Play.dices.Count; i++)
+                    for (int i = 0; i < Play.ds.Count; i++)
                     {
-                        Play.dices[i].transform.rotation = Random.rotation;
-                        r = Play.dices[i].GetComponent<Rigidbody>();
+                        Play.ds[i].transform.rotation = Random.rotation;
+                        r = Play.ds[i].GetComponent<Rigidbody>();
                         r.AddForce(force * vector3.z * Vector3.up);
                         r.AddTorque(force * new Vector3(Random.value, Random.value, Random.value));
                     }

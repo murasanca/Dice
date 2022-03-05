@@ -2,17 +2,22 @@
 
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace murasanca
 {
     public class Menu : MonoBehaviour
     {
         [SerializeField]
-        private GameObject[] gameObjects = new GameObject[6];
+        private RectTransform[] rTs = new RectTransform[6]; // rTs: Rect Transforms.
 
         private readonly Vector2[]
-                    vector2s0 = new Vector2[6], // Shield.
-                    vector2s1 = new Vector2[6]; // Advertisement.
+            v2s0 = new Vector2[6], // v2s0: Vector2's 0.
+            v2s1 = new Vector2[6]; // v2s1: Vector2's 1.
+
+        public static Button
+            g, // g: Goblet.
+            s; // s: Scroll.
 
         public static GameObject[] // HP: High Poly, LP: Low Poly.
             dDHP = new GameObject[23], dDLP = new GameObject[23],
@@ -23,7 +28,7 @@ namespace murasanca
             d12HP = new GameObject[23], d12LP = new GameObject[23],
             d20HP = new GameObject[23], d20LP = new GameObject[23];
 
-        public readonly static Vector2 banner = 90 * Vector2.up;
+        public readonly static Vector2 b = 90 * Vector2.up;
 
         public readonly static WaitForSeconds wFS = new(1); // wFS: Wait For Seconds.
 
@@ -34,9 +39,9 @@ namespace murasanca
             get
             {
                 if (!Monetization.IBL || IAP.HR(0))
-                    return vector2s0;
+                    return v2s0;
                 else
-                    return vector2s1;
+                    return v2s1;
             }
         }
 
@@ -73,11 +78,14 @@ namespace murasanca
 
         private void Awake()
         {
-            for (int i = 0; i < gameObjects.Length; i++)
+            for (int i = 0; i < rTs.Length; i++)
             {
-                vector2s0[i] = banner + gameObjects[i].GetComponent<RectTransform>().anchoredPosition;
-                vector2s1[i] = gameObjects[i].GetComponent<RectTransform>().anchoredPosition;
+                v2s0[i] = b + rTs[i].anchoredPosition;
+                v2s1[i] = rTs[i].anchoredPosition;
             }
+
+            g = GameObject.Find("Goblet Button").GetComponent<Button>();
+            s = GameObject.Find("Scroll Button").GetComponent<Button>();
 
             if (dDHP is not null) for (int i = 0; i < dDHP.Length; i++) dDHP[i] = Resources.Load<GameObject>(String.Concat("DD High Poly ", i));
             if (dDLP is not null) for (int i = 0; i < dDLP.Length; i++) dDLP[i] = Resources.Load<GameObject>(String.Concat("DD Low Poly ", i));
@@ -99,9 +107,9 @@ namespace murasanca
 
             if (d20HP is not null) for (int i = 0; i < d20HP.Length; i++) d20HP[i] = Resources.Load<GameObject>(String.Concat("D20 High Poly ", i));
             if (d20LP is not null) for (int i = 0; i < d20LP.Length; i++) d20LP[i] = Resources.Load<GameObject>(String.Concat("D20 Low Poly ", i));
-
-            StartCoroutine(Enumerator());
         }
+
+        private void Start() => StartCoroutine(Enumerator());
 
         // murasanca
 
@@ -109,8 +117,8 @@ namespace murasanca
         {
             while (true)
             {
-                for (int i = 0; i < gameObjects.Length; i++)
-                    gameObjects[i].GetComponent<RectTransform>().anchoredPosition = Vector2s[i];
+                for (int i = 0; i < rTs.Length; i++)
+                    rTs[i].anchoredPosition = Vector2s[i];
 
                 yield return wFS;
             }
@@ -124,15 +132,15 @@ namespace murasanca
             Scene.Load(1);
         }
 
-        public void Goblet() => PG.Leaderboard();
+        public void Goblet() => PG.Leaderboards();
 
         public void I() // I: Inventory.
         {
-            Inventory.set = -1;
+            Inventory.s = -1;
             Scene.Load(3);
         }
 
-        public void Load(int scene) => Scene.Load(scene);
+        public void Load(int s) => Scene.Load(s); // s: Scene.
 
         public void Scroll() => PG.Achievements();
 

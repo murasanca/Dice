@@ -1,4 +1,4 @@
-// murasanca
+// Murat Sancak
 
 using TMPro;
 using UnityEngine;
@@ -10,81 +10,91 @@ namespace murasanca
     public class Settings : MonoBehaviour
     {
         [SerializeField]
-        private GameObject
-            mPB, // mPB: Music Pitch Button.
-            mPS, // mPS: Music Pitch Slider.
-            mPT, // mPT: Music Pitch Text (TMP).
-            mVB, // mVB: Music Volume Button.
-            mVS, // mVS: Music Volume Slider.
-            mVT, // mVT: Music Volume Text (TMP).
-            pB, // pB: Poly Button.
-            pH, // pH: Poly Handle.
-            pS, // pS: Poly Slider.
-            pT; // pT: Poly Text.
+        private Button
+            pB, // pB: Pitch Button.
+            polyB, // Poly Button.
+            vB; // vB: Volume Button.
 
         [SerializeField]
-        private GameObject[] gameObjects = new GameObject[3];
+        private Image polyH; // polyH: Poly Handle.
 
         [SerializeField]
-        private Sprite gold, silver;
+        private RectTransform[] rTs = new RectTransform[3]; // rTs: Rect Transforms.
 
-        private readonly Vector2 banner = Menu.banner;
+        [SerializeField]
+        private Slider
+            pS, // pS: Pitch Slider.
+            polyS, // polyS: Poly Slider.
+            vS; // vS: Volume Slider.
+
+        [SerializeField]
+        private Sprite
+            g, // g: Gold.
+            s; // s: Silver.
+
+        [SerializeField]
+        private TextMeshProUGUI
+            pTMPUGUI, // pTMPUGUI: Pitch Text (TMP).
+            polyTMPUGUI, // polyTMPUGUI: Poly Text (TMP).
+            vTMPUGUI; // vTMPUGUI: Volume Text (TMP).
+
+        private readonly Vector2 b = Menu.b; // b: Banner.
 
         private readonly Vector2[]
-                    vector2s0 = new Vector2[3], // Shield.
-                    vector2s1 = new Vector2[3]; // Advertisement.
+            v2s0 = new Vector2[3], // v2s0: Vector2's 0.
+            v2s1 = new Vector2[3]; // v2s1: Vector2's 1.
 
         private readonly WaitForSeconds wFS = Menu.wFS; // wFS: Wait For Seconds.
 
-        // murasanca
+        // Murat Sancak
 
         private Vector2[] Vector2s
         {
             get
             {
                 if (!Monetization.IBL || IAP.HR(0))
-                    return vector2s0;
+                    return v2s0;
                 else
-                    return vector2s1;
+                    return v2s1;
             }
         }
 
-        // murasanca
+        // Murat Sancak
 
         private void Awake()
         {
-            for (int i = 0; i < gameObjects.Length; i++)
+            for (int i = 0; i < rTs.Length; i++)
             {
-                vector2s0[i] = banner + gameObjects[i].GetComponent<RectTransform>().anchoredPosition;
-                vector2s1[i] = gameObjects[i].GetComponent<RectTransform>().anchoredPosition;
+                v2s0[i] = b + rTs[i].anchoredPosition;
+                v2s1[i] = rTs[i].anchoredPosition;
             }
 
-            mVB.GetComponent<Button>().interactable = Preferences.V is .64f;
-            mPB.GetComponent<Button>().interactable = Preferences.P is 1;
-
-            mPS.GetComponent<Slider>().value = Preferences.P;
-            mVS.GetComponent<Slider>().value = Preferences.V;
-            pS.GetComponent<Slider>().value = Preferences.Poly;
-
-            StartCoroutine(Enumerator());
+            pB.interactable = Preferences.P is 1;
+            vB.interactable = Preferences.V is .64f;
+            
+            pS.value = Preferences.P;
+            polyS.value = Preferences.Poly;
+            vS.value = Preferences.V;
         }
 
-        // murasanca
+        private void Start() => StartCoroutine(Enumerator());
+
+        // Murat Sancak
 
         private System.Collections.IEnumerator Enumerator()
         {
             while (true)
             {
-                for (int i = 0; i < gameObjects.Length; i++)
-                    gameObjects[i].GetComponent<RectTransform>().anchoredPosition = Vector2s[i];
+                for (int i = 0; i < rTs.Length; i++)
+                    rTs[i].anchoredPosition = Vector2s[i];
 
                 yield return wFS;
             }
         }
 
-        // murasanca
+        // Murat Sancak
 
-        public void Load(int scene) => Scene.Load(scene);
+        public void Load(int s) => Scene.Load(s); // s: Scene.
 
         public void Mail() => Application.OpenURL
         (
@@ -194,39 +204,43 @@ namespace murasanca
             )
         );
 
-        public void MPB() => mPS.GetComponent<Slider>().value = 1; // MPB: Music Pitch Button.
+        public void PB() => pS.value = 1; // PB: Pitch Button.
 
-        public void MVB() => mVS.GetComponent<Slider>().value = .64f; // MPB: Music Volume Button.
-
-        public void OnMPVChanged() // MPV: Music Pitch Value.
+        public void PV() // PV: Pitch Value.
         {
-            Time.timeScale = Mathf.Abs(Preferences.P = Music.music.GetComponent<AudioSource>().pitch = mPS.GetComponent<Slider>().value);
-            
-            mPB.GetComponent<Button>().interactable = Preferences.P is not 1;
-            mPT.GetComponent<TextMeshProUGUI>().text = Preferences.P.ToString("F2");
+            Preferences.P = Sound.P = pS.value;
+
+            pB.interactable = Preferences.P is not 1;
+            pTMPUGUI.text = Preferences.P.ToString("F2");
         }
 
-        public void OnMVVChanged() // MVV: Music Volume Value.
+        public void PolyB() => polyS.value = 1; // B: Button.
+
+        public void PolyV() // V: Value.
         {
-            Preferences.V = Music.music.GetComponent<AudioSource>().volume = mVS.GetComponent<Slider>().value;
-            
-            mVB.GetComponent<Button>().interactable = Preferences.V is not .64f;
-            mVT.GetComponent<TextMeshProUGUI>().text = Preferences.V.ToString("F2");
+            Preferences.Poly = (int)polyS.value;
+
+            polyB.interactable = Preferences.Poly is 0;
+            polyH.sprite = Preferences.Poly is 1 ? g : s;
+            polyTMPUGUI.text = Preferences.Poly.ToString();
         }
 
-        public void OnPVChanged() // PV: Poly Value.
+        public void Reload()
         {
-            Preferences.Poly = (int)pS.GetComponent<Slider>().value;
-            
-            pB.GetComponent<Button>().interactable = Preferences.Poly is 0;
-            pH.GetComponent<Image>().sprite = Preferences.Poly is 1 ? gold : silver;
-            pT.GetComponent<TextMeshProUGUI>().text = Preferences.Poly.ToString();
+            PB();
+            VB();
         }
 
-        public void PB() => pS.GetComponent<Slider>().value = 1; // PB: Poly Button
+        public void VB() => vS.value = .64f; // VB:s Volume Button.
 
-        public void Reload() => PlayerPrefs.DeleteAll();
+        public void VV() // VV: Volume Value.
+        {
+            Preferences.V = Sound.V = vS.value;
+            
+            vB.interactable = Preferences.V is not .64f;
+            vTMPUGUI.text = Preferences.V.ToString("F2");
+        }
     }
 }
 
-// murasanca
+// Murat Sancak

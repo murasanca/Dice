@@ -19,15 +19,13 @@ namespace murasanca
             get
             {
                 if (!HasKey("p"))
-                    Time.timeScale = Mathf.Abs(P = 1);
+                    P = 1;
                 return GetFloat("p", p);
             }
             set
             {
                 SetFloat("p", value);
                 Save();
-
-                Time.timeScale = Mathf.Abs(P);
             }
         }
 

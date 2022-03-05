@@ -1,4 +1,4 @@
-﻿// murasanca
+﻿// Murat Sancak
 
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
@@ -8,9 +8,9 @@ namespace murasanca
 {
     public class PG : MonoBehaviour // PG: Play Games.
     {
-        public static PG pG;
+        public static PG pG; // pG: Play Games.
 
-        // murasanca
+        // Murat Sancak
 
         private void Awake()
         {
@@ -23,36 +23,31 @@ namespace murasanca
 
         private void Start()
         {
-            PlayGamesClientConfiguration pGCC = new PlayGamesClientConfiguration.Builder().Build(); // pGCC: Play Games Client Configuration.
-            PlayGamesPlatform.InitializeInstance(pGCC);
+            PlayGamesPlatform.InitializeInstance(new PlayGamesClientConfiguration.Builder().Build());
             PlayGamesPlatform.DebugLogEnabled = true;
             PlayGamesPlatform.Activate();
-            Social.localUser.Authenticate((bool success) =>
-            {
-                if (success)
-                    ((PlayGamesPlatform)Social.Active).SetGravityForPopups(Gravity.TOP);
-            });
+            Social.localUser.Authenticate
+            (
+                (bool success) =>
+                {
+                    if (success)
+                    {
+                        ((PlayGamesPlatform)Social.Active).SetGravityForPopups(Gravity.TOP);
+
+                        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex is 0) // Menu.
+                            Menu.g.interactable = Menu.s.interactable = true;
+                    }
+                }
+            );
         }
 
-        // murasanca
+        // Murat Sancak
 
-        public static void Achievements()
-        {
-            if (Social.localUser.authenticated)
-                Social.ShowAchievementsUI();
-        }
-
-        public static void Leaderboard()
-        {
-            if (Social.localUser.authenticated)
-                Social.ShowLeaderboardUI();
-        }
-
-        public static void Progress(int achievement)
+        public static void Achievement(int a) // a: Achievement.
         {
             if (Social.localUser.authenticated)
             {
-                switch (achievement)
+                switch (a)
                 {
                     case 8:
                         Social.ReportProgress(PGS.achievement_8, 100, success => { });
@@ -84,12 +79,20 @@ namespace murasanca
             }
         }
 
-        public static void Score(int score)
+        public static void Leaderboard(int s) // s: Score.
         {
             if (Social.localUser.authenticated)
-                Social.ReportScore(score, PGS.leaderboard_dice, success => { });
+                Social.ReportScore(s, PGS.leaderboard_dice, success => { });
         }
-    }
+
+        public static void Achievements()
+        {
+            if (Social.localUser.authenticated)
+                Social.ShowAchievementsUI();
+        }
+
+        public static void Leaderboards() => Social.ShowLeaderboardUI();
+        }
 }
 
-// murasanca
+// Murat Sancak

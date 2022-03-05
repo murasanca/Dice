@@ -718,7 +718,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 391825370}
   m_OnClick:
     m_PersistentCalls:
@@ -1026,7 +1026,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 532655500}
   m_OnClick:
     m_PersistentCalls:
@@ -1334,7 +1334,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 590410268}
   m_OnClick:
     m_PersistentCalls:
@@ -1666,7 +1666,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 649129229}
   m_OnClick:
     m_PersistentCalls:
@@ -1773,7 +1773,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2094137948}
-  m_RootOrder: 26
+  m_RootOrder: 27
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1937,7 +1937,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 1}
+  m_BackGroundColor: {r: 0.2509804, g: 0.2509804, b: 0.2509804, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -2016,13 +2016,13 @@ MonoBehaviour:
   d10D: {fileID: 551144491}
   d12D: {fileID: 1709372670}
   d20D: {fileID: 2019370157}
-  scoreText: {fileID: 2058233740}
-  upperPanel: {fileID: 238360464}
-  gameObjects:
-  - {fileID: 968665963}
-  - {fileID: 609537512}
-  - {fileID: 1574792999}
-  - {fileID: 2058233740}
+  sT: {fileID: 2058233741}
+  uP: {fileID: 238360465}
+  rTs:
+  - {fileID: 968665964}
+  - {fileID: 609537513}
+  - {fileID: 1574793000}
+  - {fileID: 2058233741}
 --- !u!114 &816841832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2813,7 +2813,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1003154815}
   m_OnClick:
     m_PersistentCalls:
@@ -3121,7 +3121,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1133602836}
   m_OnClick:
     m_PersistentCalls:
@@ -4552,7 +4552,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1729493571}
   m_OnClick:
     m_PersistentCalls:
@@ -5089,7 +5089,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2094137948}
-  m_RootOrder: 27
+  m_RootOrder: 26
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -5734,8 +5734,8 @@ RectTransform:
   - {fileID: 1688567055}
   - {fileID: 649129227}
   - {fileID: 2019370158}
-  - {fileID: 804776254}
   - {fileID: 1974162428}
+  - {fileID: 804776254}
   m_Father: {fileID: 1462753247}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

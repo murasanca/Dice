@@ -15,11 +15,11 @@ namespace murasanca
 
         private static IStoreController sC; // sC: Store Controller.
 
-        private static Product product;
+        private static Product p; // p: Product.
 
         public static IAP iap; // iap: In-App Purchase.
 
-        public readonly static string[] products = new string[23]
+        public readonly static string[] ps = new string[23] // ps: Products.
         {
             "com.murasanca.dice.0",
             "com.murasanca.dice.1",
@@ -50,17 +50,6 @@ namespace murasanca
 
         public static bool II => eP is not null && sC is not null; // II: Is Initialized.
 
-        private static Product[] Product
-        {
-            get
-            {
-                if (II)
-                    return sC.products.all;
-                else
-                    return null;
-            }
-        }
-
         // Murat Sancak
 
         private void Awake()
@@ -70,10 +59,9 @@ namespace murasanca
             else if (iap != this)
                 Destroy(gameObject);
             DontDestroyOnLoad(iap);
-
-            if (sC is null)
-                Initialize();
         }
+
+        private void Start() => Initialize();
 
         // Murat Sancak
 
@@ -81,10 +69,9 @@ namespace murasanca
         {
             if (II)
             {
-                product = sC.products.WithID(p);
-
-                if (product is not null && product.availableToPurchase)
-                    sC.InitiatePurchase(product);
+                IAP.p = sC.products.WithID(p);
+                if (IAP.p is not null && IAP.p.availableToPurchase)
+                    sC.InitiatePurchase(IAP.p);
                 else
                     Handheld.Vibrate();
             }
@@ -94,47 +81,48 @@ namespace murasanca
 
         public void Initialize()
         {
-            if (II)
-                return;
-
             cB = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
-            foreach (string product in products)
-                cB.AddProduct(product, ProductType.NonConsumable);
+            foreach (string p in ps) // p: Product.
+                cB.AddProduct(p, ProductType.NonConsumable);
             UnityPurchasing.Initialize(iap, cB);
         }
 
         public static bool HR(int p) // HR: Has Receipt, p: Product.
         {
             if (II)
-                return sC.products.WithID(products[p]).hasReceipt;
+                return sC.products.WithID(ps[p]).hasReceipt;
             else
                 return false;
         }
 
-        public static void Checkmark(int product)
+        public static void Checkmark(int p) // p: Product.
         {
-            if (product is not -1)
-                Checkmark(products[product]);
+            if (p is not -1)
+                Checkmark(ps[p]);
             else
-                Checkmark(products[0]);
+                Checkmark(ps[0]);
         }
 
         // Murat Sancak
 
-        public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs args)
+        public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs pEA) // pEA: Purchase Event Args.
         {
-            if (string.Equals(args.purchasedProduct.definition.id, products[0], StringComparison.Ordinal))
+            if (string.Equals(pEA.purchasedProduct.definition.id, ps[0], StringComparison.Ordinal))
             {
-                Bag.Set(-1);
+                if (SceneManager.GetActiveScene().buildIndex is 1) // Bag.
+                    Bag.Set(-1);
+
                 Monetization.Hide();
 
                 return PurchaseProcessingResult.Complete;
             }
 
-            for (int i = 1; i < products.Length; i++)
-                if (string.Equals(args.purchasedProduct.definition.id, products[i], StringComparison.Ordinal))
+            for (int i = 1; i < ps.Length; i++)
+                if (string.Equals(pEA.purchasedProduct.definition.id, ps[i], StringComparison.Ordinal))
                 {
-                    Bag.Set();
+                    if (SceneManager.GetActiveScene().buildIndex is 1) // Bag.
+                        Bag.Set();
+
                     return PurchaseProcessingResult.Complete;
                 }
 
@@ -143,19 +131,19 @@ namespace murasanca
             return PurchaseProcessingResult.Complete;
         }
 
-        public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
+        public void OnInitialized(IStoreController sC, IExtensionProvider eP) // sC: Store Controller, eP: Extension Provider.
         {
-            eP = extensions;
-            sC = controller;
+            IAP.eP = eP;
+            IAP.sC = sC;
         }
 
-        public void OnInitializeFailed(InitializationFailureReason error) => Handheld.Vibrate();
+        public void OnInitializeFailed(InitializationFailureReason iFR) => Initialize(); // iFR: Purchase Failure Reason.
 
         public void OnPurchaseFailed(Product p, PurchaseFailureReason pFR) // p: Product, pFR: Purchase Failure Reason.
         {
             Handheld.Vibrate();
 
-            if (SceneManager.GetActiveScene().buildIndex is 2) // Settings.
+            if (SceneManager.GetActiveScene().buildIndex is 1) // Bag.
                 Bag.Close();
         }
     }

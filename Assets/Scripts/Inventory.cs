@@ -8,25 +8,25 @@ namespace murasanca
     public class Inventory : MonoBehaviour
     {
         [SerializeField]
-        private GameObject[] gameObjects = new GameObject[3];
+        private RectTransform[] rTs = new RectTransform[3]; // rTs: Rect Transforms.
 
         private float x;
 
         private Touch touch;
 
-        private readonly Vector2 banner = Menu.banner;
+        private readonly Vector2 b = Menu.b;
 
         private readonly Vector2[]
-            vector2s0 = new Vector2[3], // Shield.
-            vector2s1 = new Vector2[3]; // Advertisement.
+            v2s0 = new Vector2[3], // v2s0: Vector2's 0.
+            v2s1 = new Vector2[3]; // v2s1: Vector2's 1.
 
         private readonly WaitForSeconds wFS = Menu.wFS; // wFS: Wait For Seconds.
 
         private static GameObject bagButton, checkmarkButton, closeButton, dicesGameObject, keyRawImage, paintbrushButton, productText, shieldKeyRawImage, shieldRawImage;
 
-        private static readonly GameObject[] dices = new GameObject[7];
+        private static readonly GameObject[] ds = new GameObject[7]; // ds: Dices.
 
-        public static int set = -1;
+        public static int s = -1; // s: Set.
 
         // murasanca
 
@@ -35,9 +35,9 @@ namespace murasanca
             get
             {
                 if (!Monetization.IBL || IAP.HR(0))
-                    return vector2s0;
+                    return v2s0;
                 else
-                    return vector2s1;
+                    return v2s1;
             }
         }
 
@@ -55,16 +55,16 @@ namespace murasanca
             shieldKeyRawImage = GameObject.Find("Shield Key Raw Image");
             shieldRawImage = GameObject.Find("Shield Raw Image");
 
-            for (int i = 0; i < gameObjects.Length; i++)
+            for (int i = 0; i < rTs.Length; i++)
             {
-                vector2s0[i] = banner + gameObjects[i].GetComponent<RectTransform>().anchoredPosition;
-                vector2s1[i] = gameObjects[i].GetComponent<RectTransform>().anchoredPosition;
+                v2s0[i] = b + rTs[i].anchoredPosition;
+                v2s1[i] = rTs[i].anchoredPosition;
             }
 
             StartCoroutine(Enumerator());
         }
 
-        private void Start() => Set(set);
+        private void Start() => Set(s);
 
         private void Update()
         {
@@ -84,8 +84,8 @@ namespace murasanca
         {
             while (true)
             {
-                for (int i = 0; i < gameObjects.Length; i++)
-                    gameObjects[i].GetComponent<RectTransform>().anchoredPosition = Vector2s[i];
+                for (int i = 0; i < rTs.Length; i++)
+                    rTs[i].anchoredPosition = Vector2s[i];
 
                 yield return wFS;
             }
@@ -95,13 +95,13 @@ namespace murasanca
 
         public void B() // B: Bag.
         {
-            Bag.set = set;
+            Bag.set = s;
             Scene.Load(1);
         }
 
         public void Checkmark()
         {
-            Preferences.DD = Preferences.D4 = Preferences.D6 = Preferences.D8 = Preferences.D10 = Preferences.D12 = Preferences.D20 = set;
+            Preferences.DD = Preferences.D4 = Preferences.D6 = Preferences.D8 = Preferences.D10 = Preferences.D12 = Preferences.D20 = s;
             Close();
         }
 
@@ -121,57 +121,57 @@ namespace murasanca
 
         public void Reload() => PlayerPrefs.DeleteAll();
 
-        public void Set() => set = -1;
+        public void Set() => s = -1;
 
-        public void Slide(float sign)
+        public void Slide(float s) // s: Sign.
         {
-            if (sign is 1)
-                if (set is not 22)
-                    ++set;
+            if (s is 1)
+                if (Inventory.s is not 22)
+                    ++Inventory.s;
                 else
-                    set = -1;
+                    Inventory.s = -1;
             else // sign is -1.
-                if (set is not -1)
-                --set;
+                if (Inventory.s is not -1)
+                --Inventory.s;
             else
-                set = 22;
+                Inventory.s = 22;
 
-            Set(set);
+            Set(Inventory.s);
         }
 
         private static void Instantiate()
         {
             if (Preferences.Poly is 1)
             {
-                dices[0] = Instantiate(Menu.dDHP[set], Menu.Vector3s[0], Quaternion.identity, dicesGameObject.transform);
-                dices[1] = Instantiate(Menu.d4HP[set], Menu.Vector3s[1], Quaternion.identity, dicesGameObject.transform);
-                dices[2] = Instantiate(Menu.d6HP[set], Menu.Vector3s[2], Quaternion.identity, dicesGameObject.transform);
-                dices[3] = Instantiate(Menu.d8HP[set], Menu.Vector3s[3], Quaternion.identity, dicesGameObject.transform);
-                dices[4] = Instantiate(Menu.d10HP[set], Menu.Vector3s[4], Quaternion.identity, dicesGameObject.transform);
-                dices[5] = Instantiate(Menu.d12HP[set], Menu.Vector3s[5], Quaternion.identity, dicesGameObject.transform);
-                dices[6] = Instantiate(Menu.d20HP[set], Menu.Vector3s[6], Quaternion.identity, dicesGameObject.transform);
+                ds[0] = Instantiate(Menu.dDHP[s], Menu.Vector3s[0], Quaternion.identity, dicesGameObject.transform);
+                ds[1] = Instantiate(Menu.d4HP[s], Menu.Vector3s[1], Quaternion.identity, dicesGameObject.transform);
+                ds[2] = Instantiate(Menu.d6HP[s], Menu.Vector3s[2], Quaternion.identity, dicesGameObject.transform);
+                ds[3] = Instantiate(Menu.d8HP[s], Menu.Vector3s[3], Quaternion.identity, dicesGameObject.transform);
+                ds[4] = Instantiate(Menu.d10HP[s], Menu.Vector3s[4], Quaternion.identity, dicesGameObject.transform);
+                ds[5] = Instantiate(Menu.d12HP[s], Menu.Vector3s[5], Quaternion.identity, dicesGameObject.transform);
+                ds[6] = Instantiate(Menu.d20HP[s], Menu.Vector3s[6], Quaternion.identity, dicesGameObject.transform);
             }
             else
             {
-                dices[0] = Instantiate(Menu.dDLP[set], Menu.Vector3s[0], Quaternion.identity, dicesGameObject.transform);
-                dices[1] = Instantiate(Menu.d4LP[set], Menu.Vector3s[1], Quaternion.identity, dicesGameObject.transform);
-                dices[2] = Instantiate(Menu.d6LP[set], Menu.Vector3s[2], Quaternion.identity, dicesGameObject.transform);
-                dices[3] = Instantiate(Menu.d8LP[set], Menu.Vector3s[3], Quaternion.identity, dicesGameObject.transform);
-                dices[4] = Instantiate(Menu.d10LP[set], Menu.Vector3s[4], Quaternion.identity, dicesGameObject.transform);
-                dices[5] = Instantiate(Menu.d12LP[set], Menu.Vector3s[5], Quaternion.identity, dicesGameObject.transform);
-                dices[6] = Instantiate(Menu.d20LP[set], Menu.Vector3s[6], Quaternion.identity, dicesGameObject.transform);
+                ds[0] = Instantiate(Menu.dDLP[s], Menu.Vector3s[0], Quaternion.identity, dicesGameObject.transform);
+                ds[1] = Instantiate(Menu.d4LP[s], Menu.Vector3s[1], Quaternion.identity, dicesGameObject.transform);
+                ds[2] = Instantiate(Menu.d6LP[s], Menu.Vector3s[2], Quaternion.identity, dicesGameObject.transform);
+                ds[3] = Instantiate(Menu.d8LP[s], Menu.Vector3s[3], Quaternion.identity, dicesGameObject.transform);
+                ds[4] = Instantiate(Menu.d10LP[s], Menu.Vector3s[4], Quaternion.identity, dicesGameObject.transform);
+                ds[5] = Instantiate(Menu.d12LP[s], Menu.Vector3s[5], Quaternion.identity, dicesGameObject.transform);
+                ds[6] = Instantiate(Menu.d20LP[s], Menu.Vector3s[6], Quaternion.identity, dicesGameObject.transform);
             }
         }
 
-        public static void Set(int set)
+        public static void Set(int s) // s: Set.
         {
             checkmarkButton.SetActive(false);
             closeButton.SetActive(false);
 
-            foreach (GameObject dice in dices)
+            foreach (GameObject dice in ds)
                 Destroy(dice);
 
-            switch (set)
+            switch (s)
             {
                 case -1: // Shield
                     paintbrushButton.SetActive(false);
@@ -207,7 +207,7 @@ namespace murasanca
                     shieldKeyRawImage.SetActive(false);
                     shieldRawImage.SetActive(false);
 
-                    if (IAP.HR(set))
+                    if (IAP.HR(s))
                     {
                         bagButton.SetActive(false);
                         keyRawImage.SetActive(true);
@@ -219,7 +219,7 @@ namespace murasanca
                         bagButton.SetActive(true);
                         keyRawImage.SetActive(false);
                         paintbrushButton.SetActive(false);
-                        productText.GetComponent<TextMeshProUGUI>().text = Bag.products[set];
+                        productText.GetComponent<TextMeshProUGUI>().text = Bag.products[s];
                         productText.SetActive(true);
                     }
 
