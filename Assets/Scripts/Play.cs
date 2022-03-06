@@ -1,6 +1,5 @@
 ﻿// Murat Sancak
 
-using murasanca;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -10,7 +9,19 @@ using UnityEngine.UI;
 public class Play:MonoBehaviour
 {
     [SerializeField]
-    private GameObject dDD, d4D, d6D, d8D, d10D, d12D, d20D; // D: Down.
+    private Button // A: Advertisement, D: Down, U: Up.
+        dDAB, dDDB, dDUB,
+        d4AB, d4DB, d4UB,
+        d6AB, d6DB, d6UB,
+        d8AB, d8DB, d8UB,
+        d10AB, d10DB, d10UB,
+        d12AB, d12DB, d12UB,
+        d20AB, d20DB, d20UB;
+
+    [SerializeField]
+    private GameObject
+        A, // A: Advertisement.
+        U; // U: Up.
 
     [SerializeField]
     private RectTransform
@@ -22,7 +33,9 @@ public class Play:MonoBehaviour
 
     private GameObject gO; // gO: Game Object.
 
-    private int s = 0; // s: Score.
+    private int
+        f, // f: For.
+        s = 0; // s: Score.
 
     private readonly Vector2 b = Menu.b; // b: Banner.
 
@@ -32,15 +45,7 @@ public class Play:MonoBehaviour
 
     private readonly WaitForSeconds wFS = new(.1f); // wFS: Wait For Seconds.
 
-    private static GameObject // A: Advertisement, U: Up.
-        dDA, dDU,
-        d4A, d4U,
-        d6A, d6U,
-        d8A, d8U,
-        d10A, d10U,
-        d12A, d12U,
-        d20A, d20U,
-        dGO; // dGO: Dices Game Object.
+    private static GameObject dGO; // dGO: Dices Game Object.
 
     private readonly static GameObject[] // HP: High Poly, LP: Low Poly.
         dDHP = Menu.dDHP, dDLP = Menu.dDLP,
@@ -64,55 +69,32 @@ public class Play:MonoBehaviour
 
     private readonly static Vector3[]
         v3s = new Vector3[7] // v3s: Vector3's.
-        {
-                new(0, 1.64f, 0), // dD
-                new(8, 1.35f, 0), // d4
-                new(15.5f, 1.64f, 0), // d6
-                new(11.5f, 1.64f, 0), // d8
-                new(8, 1.64f, 2.5f), // d10
-                new(8, 1.64f, -2.5f), // d12
-                new(4, 1.64f, 0), // d20
-        };
+            {
+                new(0, 1.64f, 0), // dD.
+                new(8, 1.35f, 0), // d4.
+                new(15.5f, 1.64f, 0), // d6.
+                new(11.5f, 1.64f, 0), // d8.
+                new(8, 1.64f, 2.5f), // d10.
+                new(8, 1.64f, -2.5f), // d12.
+                new(4, 1.64f, 0), // d20.
+            };
 
     public static IList<GameObject> ds = new List<GameObject>(); // ds: Dices.
 
     // Murat Sancak
 
-    private Vector2[] Vector2s
-    {
-        get
-        {
-            if(!Monetization.IBL||IAP.HR(0))
-                return v2s0;
-            else
-                return v2s1;
-        }
-    }
+    private Vector2[] V2s => !Monetization.IBL||IAP.HR(0) ? v2s0 : v2s1; // V2s: Vector2's.
 
     // Murat Sancak
 
     private void Awake()
     {
-        dDA=GameObject.Find("DD Ad Button");
-        dDU=GameObject.Find("DD Up Button");
-        d4A=GameObject.Find("D4 Ad Button");
-        d4U=GameObject.Find("D4 Up Button");
-        d6A=GameObject.Find("D6 Ad Button");
-        d6U=GameObject.Find("D6 Up Button");
-        d8A=GameObject.Find("D8 Ad Button");
-        d8U=GameObject.Find("D8 Up Button");
-        d10A=GameObject.Find("D10 Ad Button");
-        d10U=GameObject.Find("D10 Up Button");
-        d12A=GameObject.Find("D12 Ad Button");
-        d12U=GameObject.Find("D12 Up Button");
-        d20A=GameObject.Find("D20 Ad Button");
-        d20U=GameObject.Find("D20 Up Button");
         dGO=GameObject.Find("Dices Game Object");
 
-        for(int i = 0;i<rTs.Length;i++)
+        for(f=0;f<rTs.Length;f++)
         {
-            v2s0[i]=b+rTs[i].anchoredPosition;
-            v2s1[i]=rTs[i].anchoredPosition;
+            v2s0[f]=b+rTs[f].anchoredPosition;
+            v2s1[f]=rTs[f].anchoredPosition;
         }
     }
 
@@ -170,8 +152,8 @@ public class Play:MonoBehaviour
     {
         while(true)
         {
-            for(int i = 0;i<rTs.Length;i++)
-                rTs[i].anchoredPosition=Vector2s[i];
+            for(f=0;f<rTs.Length;f++)
+                rTs[f].anchoredPosition=V2s[f];
 
             foreach(GameObject d in ds) // d: Dice.
                 s+=d.GetComponent<Dice>().s;
@@ -200,46 +182,33 @@ public class Play:MonoBehaviour
 
     private void Button(bool a,bool i) // a: Active, i: Interactable.
     {
-        dDA.GetComponent<Button>().interactable=
-        d4A.GetComponent<Button>().interactable=
-        d6A.GetComponent<Button>().interactable=
-        d8A.GetComponent<Button>().interactable=
-        d10A.GetComponent<Button>().interactable=
-        d12A.GetComponent<Button>().interactable=
-        d20A.GetComponent<Button>().interactable=
+        A.SetActive(!a);
+        U.SetActive(a);
+
+        dDAB.interactable=
+        d4AB.interactable=
+        d6AB.interactable=
+        d8AB.interactable=
+        d10AB.interactable=
+        d12AB.interactable=
+        d20AB.interactable=
         i;
 
-        dDA.SetActive(!a&&dDs.Count is not 2);
-        dDU.SetActive(dDs.Count is not 2&&a);
-        d4A.SetActive(!a&&d4s.Count is not 2);
-        d4U.SetActive(d4s.Count is not 2&&a);
-        d6A.SetActive(!a&&d6s.Count is not 2);
-        d6U.SetActive(d6s.Count is not 2&&a);
-        d8A.SetActive(!a&&d8s.Count is not 2);
-        d8U.SetActive(d8s.Count is not 2&&a);
-        d10A.SetActive(!a&&d10s.Count is not 2);
-        d10U.SetActive(d10s.Count is not 2&&a);
-        d12A.SetActive(!a&&d12s.Count is not 2);
-        d12U.SetActive(d12s.Count is not 2&&a);
-        d20A.SetActive(!a&&d20s.Count is not 2);
-        d20U.SetActive(d20s.Count is not 2&&a);
+        dDDB.interactable=dDs.Count is not 0;
+        d4DB.interactable=d4s.Count is not 0;
+        d6DB.interactable=d6s.Count is not 0;
+        d8DB.interactable=d8s.Count is not 0;
+        d10DB.interactable=d10s.Count is not 0;
+        d12DB.interactable=d12s.Count is not 0;
+        d20DB.interactable=d20s.Count is not 0;
 
-        dDD.SetActive(dDs.Count is not 0);
-        d4D.SetActive(d4s.Count is not 0);
-        d6D.SetActive(d6s.Count is not 0);
-        d8D.SetActive(d8s.Count is not 0);
-        d10D.SetActive(d10s.Count is not 0);
-        d12D.SetActive(d12s.Count is not 0);
-        d20D.SetActive(d20s.Count is not 0);
-
-        dDU.GetComponent<Button>().interactable=
-        d4U.GetComponent<Button>().interactable=
-        d6U.GetComponent<Button>().interactable=
-        d8U.GetComponent<Button>().interactable=
-        d10U.GetComponent<Button>().interactable=
-        d12U.GetComponent<Button>().interactable=
-        d20U.GetComponent<Button>().interactable=
-        !i;
+        dDUB.interactable=dDs.Count is not 2;
+        d4UB.interactable=d4s.Count is not 2;
+        d6UB.interactable=d6s.Count is not 2;
+        d8UB.interactable=d8s.Count is not 2;
+        d10UB.interactable=d10s.Count is not 2;
+        d12UB.interactable=d12s.Count is not 2;
+        d20UB.interactable=d20s.Count is not 2;
     }
 
     private void Remove(GameObject gO,IList<GameObject> gOs) // gO: Game Object, gOs: Game Objects.
@@ -252,8 +221,8 @@ public class Play:MonoBehaviour
 
     private static void Add(GameObject gO,IList<GameObject> gOs) => gOs.Add(gO); // gO: Game Object, gOs: Game Objects.
 
-    public void DDA() => Monetization.Rewarded(0);
-    public void DDD()
+    public void DDA() => Monetization.Rewarded(0); // A: Advertisement.
+    public void DDD() // D: Down.
     {
         if(dDs.Count is 1)
         {
@@ -261,14 +230,14 @@ public class Play:MonoBehaviour
             Remove(gO,dDs);
             Remove(gO,ds);
         }
-        else // if (dDs.Count is 2)
+        else // if(dDs.Count is 2)
         {
             gO=dDs[1];
             Remove(gO,dDs);
             Remove(gO,ds);
         }
     }
-    public void DDU()
+    public void DDU() // U: Up.
     {
         if(Preferences.Poly is 1)
             Add(Create(dDHP[Preferences.DD],v3s[0]+dDs.Count*v3),dDs);
@@ -277,8 +246,8 @@ public class Play:MonoBehaviour
         Add(dDs.Last(),ds);
     }
 
-    public void D4A() => Monetization.Rewarded(4);
-    public void D4D()
+    public void D4A() => Monetization.Rewarded(4); // A: Advertisement.
+    public void D4D() // D: Down.
     {
         if(d4s.Count is 1)
         {
@@ -286,14 +255,14 @@ public class Play:MonoBehaviour
             Remove(gO,d4s);
             Remove(gO,ds);
         }
-        else // if (d4s.Count is 2)
+        else // if(d4s.Count is 2)
         {
             gO=d4s[1];
             Remove(gO,d4s);
             Remove(gO,ds);
         }
     }
-    public void D4U()
+    public void D4U() // U: Up.
     {
         if(Preferences.Poly is 1)
             Add(Create(d4HP[Preferences.D4],v3s[1]+d4s.Count*v3),d4s);
@@ -302,8 +271,8 @@ public class Play:MonoBehaviour
         Add(d4s.Last(),ds);
     }
 
-    public void D6A() => Monetization.Rewarded(6);
-    public void D6D()
+    public void D6A() => Monetization.Rewarded(6); // A: Advertisement.
+    public void D6D() // D: Down.
     {
         if(d6s.Count is 1)
         {
@@ -311,14 +280,14 @@ public class Play:MonoBehaviour
             Remove(gO,d6s);
             Remove(gO,ds);
         }
-        else // if (d6s.Count is 2)
+        else // if(d6s.Count is 2)
         {
             gO=d6s[1];
             Remove(gO,d6s);
             Remove(gO,ds);
         }
     }
-    public void D6U()
+    public void D6U() // U: Up.
     {
         if(Preferences.Poly is 1)
             Add(Create(d6HP[Preferences.D6],v3s[2]+d6s.Count*v3),d6s);
@@ -327,8 +296,8 @@ public class Play:MonoBehaviour
         Add(d6s.Last(),ds);
     }
 
-    public void D8A() => Monetization.Rewarded(8);
-    public void D8D()
+    public void D8A() => Monetization.Rewarded(8); // A: Advertisement.
+    public void D8D() // D: Down.
     {
         if(d8s.Count is 1)
         {
@@ -336,14 +305,14 @@ public class Play:MonoBehaviour
             Remove(gO,d8s);
             Remove(gO,ds);
         }
-        else // if (d8s.Count is 2)
+        else // if(d8s.Count is 2)
         {
             gO=d8s[1];
             Remove(gO,d8s);
             Remove(gO,ds);
         }
     }
-    public void D8U()
+    public void D8U() // U: Up.
     {
         if(Preferences.Poly is 1)
             Add(Create(d8HP[Preferences.D8],v3s[3]+d8s.Count*v3),d8s);
@@ -352,8 +321,8 @@ public class Play:MonoBehaviour
         Add(d8s.Last(),ds);
     }
 
-    public void D10A() => Monetization.Rewarded(10);
-    public void D10D()
+    public void D10A() => Monetization.Rewarded(10); // A: Advertisement.
+    public void D10D() // D: Down.
     {
         if(d10s.Count is 1)
         {
@@ -361,14 +330,14 @@ public class Play:MonoBehaviour
             Remove(gO,d10s);
             Remove(gO,ds);
         }
-        else // if (d10s.Count is 2)
+        else // if(d10s.Count is 2)
         {
             gO=d10s[1];
             Remove(gO,d10s);
             Remove(gO,ds);
         }
     }
-    public void D10U()
+    public void D10U() // U: Up.
     {
         if(Preferences.Poly is 1)
             Add(Create(d10HP[Preferences.D10],v3s[4]+d10s.Count*v3),d10s);
@@ -377,8 +346,8 @@ public class Play:MonoBehaviour
         Add(d10s.Last(),ds);
     }
 
-    public void D12A() => Monetization.Rewarded(12);
-    public void D12D()
+    public void D12A() => Monetization.Rewarded(12); // A: Advertisement.
+    public void D12D() // D: Down.
     {
         if(d12s.Count is 1)
         {
@@ -386,14 +355,14 @@ public class Play:MonoBehaviour
             Remove(gO,d12s);
             Remove(gO,ds);
         }
-        else // if (d12s.Count is 2)
+        else // if(d12s.Count is 2)
         {
             gO=d12s[1];
             Remove(gO,d12s);
             Remove(gO,ds);
         }
     }
-    public void D12U()
+    public void D12U() // U: Up.
     {
         if(Preferences.Poly is 1)
             Add(Create(d12HP[Preferences.D12],v3s[5]+d12s.Count*v3),d12s);
@@ -402,8 +371,8 @@ public class Play:MonoBehaviour
         Add(d12s.Last(),ds);
     }
 
-    public void D20A() => Monetization.Rewarded(20);
-    public void D20D()
+    public void D20A() => Monetization.Rewarded(20); // A: Advertisement.
+    public void D20D() // D: Down.
     {
         if(d20s.Count is 1)
         {
@@ -411,14 +380,14 @@ public class Play:MonoBehaviour
             Remove(gO,d20s);
             Remove(gO,ds);
         }
-        else // if (d20s.Count is 2)
+        else // if(d20s.Count is 2)
         {
             gO=d20s[1];
             Remove(gO,d20s);
             Remove(gO,ds);
         }
     }
-    public void D20U()
+    public void D20U() // U: Up.
     {
         if(Preferences.Poly is 1)
             Add(Create(d20HP[Preferences.D20],v3s[6]+d20s.Count*v3),d20s);

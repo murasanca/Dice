@@ -1,6 +1,5 @@
 // Murat Sancak
 
-using murasanca;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

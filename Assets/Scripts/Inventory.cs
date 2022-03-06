@@ -86,7 +86,7 @@ namespace murasanca
 
         public void B() // B: Bag.
         {
-            Bag.set = s;
+            Bag.s = s;
             Scene.Load(1);
         }
 
@@ -187,7 +187,7 @@ namespace murasanca
                     bagButton.SetActive(false);
                     keyRawImage.SetActive(true);
                     paintbrushButton.SetActive(true);
-                    productText.GetComponent<TextMeshProUGUI>().text = Bag.products[0];
+                    productText.GetComponent<TextMeshProUGUI>().text = Bag.ps[0];
                     productText.SetActive(false);
                     shieldKeyRawImage.SetActive(false);
                     shieldRawImage.SetActive(false);
@@ -210,7 +210,7 @@ namespace murasanca
                         bagButton.SetActive(true);
                         keyRawImage.SetActive(false);
                         paintbrushButton.SetActive(false);
-                        productText.GetComponent<TextMeshProUGUI>().text = Bag.products[s];
+                        productText.GetComponent<TextMeshProUGUI>().text = Bag.ps[s];
                         productText.SetActive(true);
                     }
 

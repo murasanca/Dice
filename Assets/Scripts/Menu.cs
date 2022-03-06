@@ -1,6 +1,5 @@
 // Murat Sancak
 
-using murasanca;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
@@ -116,7 +115,7 @@ public class Menu : MonoBehaviour
 
     public void Bag()
     {
-        murasanca.Bag.set = -1;
+        murasanca.Bag.s = -1;
         Scene.Load(1);
     }
 

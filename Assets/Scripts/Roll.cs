@@ -1,6 +1,5 @@
 ﻿// Murat Sancak
 
-using murasanca;
 using UnityEngine;
 
 public class Roll:MonoBehaviour
