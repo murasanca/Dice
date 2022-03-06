@@ -1,44 +1,43 @@
-﻿// murasanca
+﻿// Murat Sancak
 
 using UnityEngine;
 
-namespace murasanca
+public class Dice:MonoBehaviour
 {
-    public class Dice : MonoBehaviour
+    [HideInInspector]
+    public int s = 1; // s: Surface.
+
+    private GameObject[] ls; // ls: Lights.
+
+    private int f; // f: For.
+
+    private Transform[] ss; // ss: Surfaces.
+
+    // Murat Sancak
+
+    private void Awake()
     {
-        [HideInInspector]
-        public int surface = 1;
+        ls=new GameObject[transform.GetChild(0).childCount];
+        ss=new Transform[transform.GetChild(1).childCount];
 
-        private GameObject[] lights;
-
-        private Transform[] surfaces;
-
-        // murasanca
-
-        private void Awake()
+        for(f=0;f<ls.Length;f++)
         {
-            lights = new GameObject[transform.GetChild(0).childCount];
-            surfaces = new Transform[transform.GetChild(1).childCount];
-
-            for (int i = 0; i < lights.Length; i++)
-            {
-                lights[i] = transform.GetChild(0).GetChild(i).gameObject;
-                surfaces[i] = transform.GetChild(1).GetChild(i).GetComponent<Transform>();
-            }
+            ls[f]=transform.GetChild(0).GetChild(f).gameObject;
+            ss[f]=transform.GetChild(1).GetChild(f).GetComponent<Transform>();
         }
+    }
 
-        private void Update()
+    private void Update()
+    {
+        for(f=0;f<ls.Length;f++)
         {
-            for (int i = 0; i < lights.Length; i++)
-            {
-                if (surfaces[i].position.y > surfaces[surface - 1].position.y)
-                    surface = i + 1;
-                lights[i].SetActive(false);
-            }
+            if(ss[f].position.y>ss[s-1].position.y)
+                s=f+1;
 
-            lights[surface - 1].SetActive(true);
+            ls[f].SetActive(false);
         }
+        ls[s-1].SetActive(true);
     }
 }
 
-// murasanca
+// Murat Sancak

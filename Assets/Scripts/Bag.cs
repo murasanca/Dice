@@ -16,7 +16,7 @@ namespace murasanca
 
         private Touch touch;
 
-        private readonly Vector2 b = Menu.b;
+        private readonly Vector2 b = Menu.b; // b: Banner.
 
         private readonly Vector2[]
             v2s0 = new Vector2[3], // v2s0: Vector2's 0.
@@ -106,23 +106,23 @@ namespace murasanca
         {
             if (Preferences.Poly is 1)
             {
-                dices[0] = Instantiate(Menu.dDHP[set], Menu.Vector3s[0], Quaternion.identity, dicesGameObject.transform);
-                dices[1] = Instantiate(Menu.d4HP[set], Menu.Vector3s[1], Quaternion.identity, dicesGameObject.transform);
-                dices[2] = Instantiate(Menu.d6HP[set], Menu.Vector3s[2], Quaternion.identity, dicesGameObject.transform);
-                dices[3] = Instantiate(Menu.d8HP[set], Menu.Vector3s[3], Quaternion.identity, dicesGameObject.transform);
-                dices[4] = Instantiate(Menu.d10HP[set], Menu.Vector3s[4], Quaternion.identity, dicesGameObject.transform);
-                dices[5] = Instantiate(Menu.d12HP[set], Menu.Vector3s[5], Quaternion.identity, dicesGameObject.transform);
-                dices[6] = Instantiate(Menu.d20HP[set], Menu.Vector3s[6], Quaternion.identity, dicesGameObject.transform);
+                dices[0] = Instantiate(Menu.dDHP[set], Menu.V3s[0], Quaternion.identity, dicesGameObject.transform);
+                dices[1] = Instantiate(Menu.d4HP[set], Menu.V3s[1], Quaternion.identity, dicesGameObject.transform);
+                dices[2] = Instantiate(Menu.d6HP[set], Menu.V3s[2], Quaternion.identity, dicesGameObject.transform);
+                dices[3] = Instantiate(Menu.d8HP[set], Menu.V3s[3], Quaternion.identity, dicesGameObject.transform);
+                dices[4] = Instantiate(Menu.d10HP[set], Menu.V3s[4], Quaternion.identity, dicesGameObject.transform);
+                dices[5] = Instantiate(Menu.d12HP[set], Menu.V3s[5], Quaternion.identity, dicesGameObject.transform);
+                dices[6] = Instantiate(Menu.d20HP[set], Menu.V3s[6], Quaternion.identity, dicesGameObject.transform);
             }
             else
             {
-                dices[0] = Instantiate(Menu.dDLP[set], Menu.Vector3s[0], Quaternion.identity, dicesGameObject.transform);
-                dices[1] = Instantiate(Menu.d4LP[set], Menu.Vector3s[1], Quaternion.identity, dicesGameObject.transform);
-                dices[2] = Instantiate(Menu.d6LP[set], Menu.Vector3s[2], Quaternion.identity, dicesGameObject.transform);
-                dices[3] = Instantiate(Menu.d8LP[set], Menu.Vector3s[3], Quaternion.identity, dicesGameObject.transform);
-                dices[4] = Instantiate(Menu.d10LP[set], Menu.Vector3s[4], Quaternion.identity, dicesGameObject.transform);
-                dices[5] = Instantiate(Menu.d12LP[set], Menu.Vector3s[5], Quaternion.identity, dicesGameObject.transform);
-                dices[6] = Instantiate(Menu.d20LP[set], Menu.Vector3s[6], Quaternion.identity, dicesGameObject.transform);
+                dices[0] = Instantiate(Menu.dDLP[set], Menu.V3s[0], Quaternion.identity, dicesGameObject.transform);
+                dices[1] = Instantiate(Menu.d4LP[set], Menu.V3s[1], Quaternion.identity, dicesGameObject.transform);
+                dices[2] = Instantiate(Menu.d6LP[set], Menu.V3s[2], Quaternion.identity, dicesGameObject.transform);
+                dices[3] = Instantiate(Menu.d8LP[set], Menu.V3s[3], Quaternion.identity, dicesGameObject.transform);
+                dices[4] = Instantiate(Menu.d10LP[set], Menu.V3s[4], Quaternion.identity, dicesGameObject.transform);
+                dices[5] = Instantiate(Menu.d12LP[set], Menu.V3s[5], Quaternion.identity, dicesGameObject.transform);
+                dices[6] = Instantiate(Menu.d20LP[set], Menu.V3s[6], Quaternion.identity, dicesGameObject.transform);
             }
         }
 

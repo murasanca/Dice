@@ -1,70 +1,68 @@
-﻿// murasanca
+﻿// Murat Sancak
 
+using murasanca;
 using UnityEngine;
 
-namespace murasanca
+public class Roll:MonoBehaviour
 {
-    public class Roll : MonoBehaviour
+    private Touch t; // t: Touch.
+
+    private Vector3 v3; // v3: Vector3.
+
+    // Murat Sancak
+
+    private void Update()
     {
-        private Touch touch;
-
-        private Vector3 vector3;
-
-        // murasanca
-
-        private void Update()
+        if(Input.touchCount is not 0&&Time.timeScale is not 0)
         {
-            if (Input.touchCount is not 0 && Time.timeScale is 1)
-            {
-                touch = Input.GetTouch(0);
-                if
+            t=Input.GetTouch(0);
+            if
+            (
+                ! // Lower Panel
                 (
-                    ! // Lower Panel
+                    t.position is { y:<432, y:>0 }
+                )
+                &&
+                (
+                    ! // Upper Panel
                     (
-                        touch.position is { y: < 432, y: > 0 }
+                        t.position.y<Screen.height&&
+                        t.position.y>Screen.height-256
                     )
                     &&
                     (
-                        ! // Upper Panel
-                        (
-                            touch.position.y < Screen.height &&
-                            touch.position.y > Screen.height - 256
-                        )
-                        &&
-                        (
-                            !Monetization.IBL
-                            ||
-                            IAP.HR(0)
-                        )
-
+                        !Monetization.IBL
                         ||
+                        IAP.HR(0)
+                    )
 
-                        ! // Upper Panel
-                        (
-                            touch.position.y < Screen.height &&
-                            touch.position.y > Screen.height - 346
-                        )
+                    ||
+
+                    ! // Upper Panel
+                    (
+                        t.position.y<Screen.height&&
+                        t.position.y>Screen.height-346
                     )
                 )
+            )
+            {
+                if(t.phase is TouchPhase.Began or TouchPhase.Moved or TouchPhase.Stationary)
                 {
-                    if (touch.phase is TouchPhase.Began or TouchPhase.Moved or TouchPhase.Stationary)
-                    {
-                        if (Physics.Raycast(Camera.main.ScreenPointToRay(touch.position), out RaycastHit hit))
-                            vector3 = hit.point;
+                    if(Physics.Raycast(Camera.main.ScreenPointToRay(t.position),out RaycastHit hit))
+                        v3=hit.point;
 
-                        for (int i = 0; i < Play.ds.Count; i++)
-                        {
-                            Play.ds[i].GetComponent<Rigidbody>().velocity = 32 * Play.ds[i].transform.forward;
-                            Play.ds[i].transform.LookAt(vector3);
-                        }
+                    for(int i = 0;i<Play.ds.Count;i++)
+                    {
+                        Play.ds[i].GetComponent<Rigidbody>().velocity=32*Play.ds[i].transform.forward;
+                        Play.ds[i].transform.LookAt(v3);
                     }
-                    if (touch.phase is TouchPhase.Canceled or TouchPhase.Ended)
-                        for (int i = 0; i < Play.ds.Count; i++)
-                            Play.ds[i].transform.rotation = Random.rotation;
                 }
+                if(t.phase is TouchPhase.Canceled or TouchPhase.Ended)
+                    for(int i = 0;i<Play.ds.Count;i++)
+                        Play.ds[i].transform.rotation=Random.rotation;
             }
         }
     }
 }
 
-// murasanca
+// Murat Sancak

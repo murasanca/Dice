@@ -655,7 +655,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 888156412}
         m_TargetAssemblyTypeName: murasanca.Menu, Assembly-CSharp
-        m_MethodName: I
+        m_MethodName: Inventory
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1120,7 +1120,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 888156412}
         m_TargetAssemblyTypeName: murasanca.Menu, Assembly-CSharp
-        m_MethodName: B
+        m_MethodName: Bag
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

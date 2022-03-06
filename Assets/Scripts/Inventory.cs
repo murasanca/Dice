@@ -30,16 +30,7 @@ namespace murasanca
 
         // murasanca
 
-        private Vector2[] Vector2s
-        {
-            get
-            {
-                if (!Monetization.IBL || IAP.HR(0))
-                    return v2s0;
-                else
-                    return v2s1;
-            }
-        }
+        private Vector2[] V2s => !Monetization.IBL||IAP.HR(0) ? v2s0 : v2s1; // V2s: Vector2's.
 
         // murasanca
 
@@ -85,7 +76,7 @@ namespace murasanca
             while (true)
             {
                 for (int i = 0; i < rTs.Length; i++)
-                    rTs[i].anchoredPosition = Vector2s[i];
+                    rTs[i].anchoredPosition = V2s[i];
 
                 yield return wFS;
             }
@@ -143,23 +134,23 @@ namespace murasanca
         {
             if (Preferences.Poly is 1)
             {
-                ds[0] = Instantiate(Menu.dDHP[s], Menu.Vector3s[0], Quaternion.identity, dicesGameObject.transform);
-                ds[1] = Instantiate(Menu.d4HP[s], Menu.Vector3s[1], Quaternion.identity, dicesGameObject.transform);
-                ds[2] = Instantiate(Menu.d6HP[s], Menu.Vector3s[2], Quaternion.identity, dicesGameObject.transform);
-                ds[3] = Instantiate(Menu.d8HP[s], Menu.Vector3s[3], Quaternion.identity, dicesGameObject.transform);
-                ds[4] = Instantiate(Menu.d10HP[s], Menu.Vector3s[4], Quaternion.identity, dicesGameObject.transform);
-                ds[5] = Instantiate(Menu.d12HP[s], Menu.Vector3s[5], Quaternion.identity, dicesGameObject.transform);
-                ds[6] = Instantiate(Menu.d20HP[s], Menu.Vector3s[6], Quaternion.identity, dicesGameObject.transform);
+                ds[0] = Instantiate(Menu.dDHP[s], Menu.V3s[0], Quaternion.identity, dicesGameObject.transform);
+                ds[1] = Instantiate(Menu.d4HP[s], Menu.V3s[1], Quaternion.identity, dicesGameObject.transform);
+                ds[2] = Instantiate(Menu.d6HP[s], Menu.V3s[2], Quaternion.identity, dicesGameObject.transform);
+                ds[3] = Instantiate(Menu.d8HP[s], Menu.V3s[3], Quaternion.identity, dicesGameObject.transform);
+                ds[4] = Instantiate(Menu.d10HP[s], Menu.V3s[4], Quaternion.identity, dicesGameObject.transform);
+                ds[5] = Instantiate(Menu.d12HP[s], Menu.V3s[5], Quaternion.identity, dicesGameObject.transform);
+                ds[6] = Instantiate(Menu.d20HP[s], Menu.V3s[6], Quaternion.identity, dicesGameObject.transform);
             }
             else
             {
-                ds[0] = Instantiate(Menu.dDLP[s], Menu.Vector3s[0], Quaternion.identity, dicesGameObject.transform);
-                ds[1] = Instantiate(Menu.d4LP[s], Menu.Vector3s[1], Quaternion.identity, dicesGameObject.transform);
-                ds[2] = Instantiate(Menu.d6LP[s], Menu.Vector3s[2], Quaternion.identity, dicesGameObject.transform);
-                ds[3] = Instantiate(Menu.d8LP[s], Menu.Vector3s[3], Quaternion.identity, dicesGameObject.transform);
-                ds[4] = Instantiate(Menu.d10LP[s], Menu.Vector3s[4], Quaternion.identity, dicesGameObject.transform);
-                ds[5] = Instantiate(Menu.d12LP[s], Menu.Vector3s[5], Quaternion.identity, dicesGameObject.transform);
-                ds[6] = Instantiate(Menu.d20LP[s], Menu.Vector3s[6], Quaternion.identity, dicesGameObject.transform);
+                ds[0] = Instantiate(Menu.dDLP[s], Menu.V3s[0], Quaternion.identity, dicesGameObject.transform);
+                ds[1] = Instantiate(Menu.d4LP[s], Menu.V3s[1], Quaternion.identity, dicesGameObject.transform);
+                ds[2] = Instantiate(Menu.d6LP[s], Menu.V3s[2], Quaternion.identity, dicesGameObject.transform);
+                ds[3] = Instantiate(Menu.d8LP[s], Menu.V3s[3], Quaternion.identity, dicesGameObject.transform);
+                ds[4] = Instantiate(Menu.d10LP[s], Menu.V3s[4], Quaternion.identity, dicesGameObject.transform);
+                ds[5] = Instantiate(Menu.d12LP[s], Menu.V3s[5], Quaternion.identity, dicesGameObject.transform);
+                ds[6] = Instantiate(Menu.d20LP[s], Menu.V3s[6], Quaternion.identity, dicesGameObject.transform);
             }
         }
 
