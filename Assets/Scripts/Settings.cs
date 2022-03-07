@@ -17,7 +17,7 @@ public class Settings:MonoBehaviour
     private Image polyH; // polyH: Poly Handle.
 
     [SerializeField]
-    private RectTransform[] rTs = new RectTransform[3]; // rTs: Rect Transforms.
+    private RectTransform uP; // uP: Upper Panel.
 
     [SerializeField]
     private Slider
@@ -36,32 +36,11 @@ public class Settings:MonoBehaviour
         polyTMPUGUI, // polyTMPUGUI: Poly Text (TMP).
         vTMPUGUI; // vTMPUGUI: Volume Text (TMP).
 
-    private int f; // f: For.
-
-    private readonly Vector2 b = Menu.b; // b: Banner.
-
-    private readonly Vector2[]
-        v2s0 = new Vector2[3], // v2s0: Vector2's 0.
-        v2s1 = new Vector2[3]; // v2s1: Vector2's 1.
-
     private readonly WaitForSeconds wFS = Menu.wFS; // wFS: Wait For Seconds.
 
     // Murat Sancak
 
-    private Vector2[] V2s => !Monetization.IBL||IAP.HR(0) ? v2s0 : v2s1; // V2s: Vector2's.
-
-    // Murat Sancak
-
-    private void Awake()
-    {
-        for(f=0;f<rTs.Length;f++)
-        {
-            v2s0[f]=b+rTs[f].anchoredPosition;
-            v2s1[f]=rTs[f].anchoredPosition;
-        }
-
-        Reload();
-    }
+    private void Awake() => Reload();
 
     private void Start() => StartCoroutine(Enumerator());
 
@@ -71,8 +50,10 @@ public class Settings:MonoBehaviour
     {
         while(true)
         {
-            for(f=0;f<rTs.Length;f++)
-                rTs[f].anchoredPosition=V2s[f];
+            if(!Monetization.IBL||IAP.HR(0))
+                uP.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical,256);
+            else
+                uP.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical,346);
 
             yield return wFS;
         }
@@ -194,9 +175,7 @@ public class Settings:MonoBehaviour
 
     public void PV() // PV: Pitch Value.
     {
-        Preferences.P=Sound.P=pS.value;
-
-        pB.interactable=Preferences.P is not 1;
+        pB.interactable=(Preferences.P=Sound.P=pS.value) is not 1;
         pTMPUGUI.text=Preferences.P.ToString("F2");
     }
 
@@ -204,9 +183,7 @@ public class Settings:MonoBehaviour
 
     public void PolyV() // V: Value.
     {
-        Preferences.Poly=(int)polyS.value;
-
-        polyB.interactable=Preferences.Poly is 0;
+        polyB.interactable=(Preferences.Poly=(int)polyS.value) is 0;
         polyH.sprite=Preferences.Poly is 1 ? g : s;
         polyTMPUGUI.text=Preferences.Poly.ToString();
     }
@@ -222,9 +199,7 @@ public class Settings:MonoBehaviour
 
     public void VV() // VV: Volume Value.
     {
-        Preferences.V=Sound.V=vS.value;
-
-        vB.interactable=Preferences.V is not .64f;
+        vB.interactable=(Preferences.V=Sound.V=vS.value) is not .64f;
         vTMPUGUI.text=Preferences.V.ToString("F2");
     }
 }

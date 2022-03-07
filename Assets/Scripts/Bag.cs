@@ -7,22 +7,14 @@ using UnityEngine.Purchasing;
 
 namespace murasanca
 {
-    public class Bag : MonoBehaviour
+    public class Bag:MonoBehaviour
     {
         [SerializeField]
-        private RectTransform[] rTs = new RectTransform[3]; // rTs: Rect Transforms.
+        private RectTransform uP; // uP: Upper Panel.
 
         private float x;
 
-        private int f; // f: For.
-
         private Touch t; // t: Touch.
-
-        private readonly Vector2 b = Menu.b; // b: Banner.
-
-        private readonly Vector2[]
-            v2s0 = new Vector2[3], // v2s0: Vector2's 0.
-            v2s1 = new Vector2[3]; // v2s1: Vector2's 1.
 
         private readonly WaitForSeconds wFS = Menu.wFS; // wFS: Wait For Seconds.
 
@@ -50,27 +42,17 @@ namespace murasanca
 
         // Murat Sancak
 
-        private Vector2[] V2s => !Monetization.IBL||IAP.HR(0) ? v2s0 : v2s1; // V2s: Vector2's.
-
-        // Murat Sancak
-
         private void Awake()
         {
             cB=GameObject.Find("Close Button");
-            cBL = GameObject.Find("Checkmark Button (Legacy)");
-            dsGO = GameObject.Find("Dices Game Object");
-            iB = GameObject.Find("Inventory Button");
-            kB = GameObject.Find("Key Button");
-            kRI = GameObject.Find("Key Raw Image");
-            lB = GameObject.Find("Lock Button");
-            pTTMP = GameObject.Find("Product Text (TMP)");
-            sRI = GameObject.Find("Shield Raw Image");
-
-            for (f = 0; f < rTs.Length; f++)
-            {
-                v2s0[f] = b + rTs[f].anchoredPosition;
-                v2s1[f] = rTs[f].anchoredPosition;
-            }
+            cBL=GameObject.Find("Checkmark Button (Legacy)");
+            dsGO=GameObject.Find("Dices Game Object");
+            iB=GameObject.Find("Inventory Button");
+            kB=GameObject.Find("Key Button");
+            kRI=GameObject.Find("Key Raw Image");
+            lB=GameObject.Find("Lock Button");
+            pTTMP=GameObject.Find("Product Text (TMP)");
+            sRI=GameObject.Find("Shield Raw Image");
 
             StartCoroutine(Enumerator());
         }
@@ -79,12 +61,12 @@ namespace murasanca
 
         private void Update()
         {
-            if (Input.touchCount is not 0)
+            if(Input.touchCount is not 0)
             {
-                if ((t=Input.GetTouch(0)).phase is TouchPhase.Began)
-                    x = t.position.x;
-                else if (256 < Mathf.Abs(x - t.position.x) && t.phase is TouchPhase.Ended)
-                    Slide(Mathf.Sign(x - t.position.x));
+                if((t=Input.GetTouch(0)).phase is TouchPhase.Began)
+                    x=t.position.x;
+                else if(256<Mathf.Abs(x-t.position.x)&&t.phase is TouchPhase.Ended)
+                    Slide(Mathf.Sign(x-t.position.x));
             }
         }
 
@@ -94,8 +76,10 @@ namespace murasanca
         {
             while(true)
             {
-                for(f = 0; f < rTs.Length; f++)
-                    rTs[f].anchoredPosition = V2s[f];
+                if(!Monetization.IBL||IAP.HR(0))
+                    uP.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical,256);
+                else
+                    uP.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical,346);
 
                 yield return wFS;
             }
@@ -105,40 +89,40 @@ namespace murasanca
 
         private static void Instantiate()
         {
-            if (Preferences.Poly is 1)
+            if(Preferences.Poly is 1)
             {
-                ds[0] = Instantiate(Menu.dDHP[s], Menu.V3s[0], Quaternion.identity, dsGO.transform);
-                ds[1] = Instantiate(Menu.d4HP[s], Menu.V3s[1], Quaternion.identity, dsGO.transform);
-                ds[2] = Instantiate(Menu.d6HP[s], Menu.V3s[2], Quaternion.identity, dsGO.transform);
-                ds[3] = Instantiate(Menu.d8HP[s], Menu.V3s[3], Quaternion.identity, dsGO.transform);
-                ds[4] = Instantiate(Menu.d10HP[s], Menu.V3s[4], Quaternion.identity, dsGO.transform);
-                ds[5] = Instantiate(Menu.d12HP[s], Menu.V3s[5], Quaternion.identity, dsGO.transform);
-                ds[6] = Instantiate(Menu.d20HP[s], Menu.V3s[6], Quaternion.identity, dsGO.transform);
+                ds[0]=Instantiate(Menu.dDHP[s],Menu.V3s[0],Quaternion.identity,dsGO.transform);
+                ds[1]=Instantiate(Menu.d4HP[s],Menu.V3s[1],Quaternion.identity,dsGO.transform);
+                ds[2]=Instantiate(Menu.d6HP[s],Menu.V3s[2],Quaternion.identity,dsGO.transform);
+                ds[3]=Instantiate(Menu.d8HP[s],Menu.V3s[3],Quaternion.identity,dsGO.transform);
+                ds[4]=Instantiate(Menu.d10HP[s],Menu.V3s[4],Quaternion.identity,dsGO.transform);
+                ds[5]=Instantiate(Menu.d12HP[s],Menu.V3s[5],Quaternion.identity,dsGO.transform);
+                ds[6]=Instantiate(Menu.d20HP[s],Menu.V3s[6],Quaternion.identity,dsGO.transform);
             }
             else
             {
-                ds[0] = Instantiate(Menu.dDLP[s], Menu.V3s[0], Quaternion.identity, dsGO.transform);
-                ds[1] = Instantiate(Menu.d4LP[s], Menu.V3s[1], Quaternion.identity, dsGO.transform);
-                ds[2] = Instantiate(Menu.d6LP[s], Menu.V3s[2], Quaternion.identity, dsGO.transform);
-                ds[3] = Instantiate(Menu.d8LP[s], Menu.V3s[3], Quaternion.identity, dsGO.transform);
-                ds[4] = Instantiate(Menu.d10LP[s], Menu.V3s[4], Quaternion.identity, dsGO.transform);
-                ds[5] = Instantiate(Menu.d12LP[s], Menu.V3s[5], Quaternion.identity, dsGO.transform);
-                ds[6] = Instantiate(Menu.d20LP[s], Menu.V3s[6], Quaternion.identity, dsGO.transform);
+                ds[0]=Instantiate(Menu.dDLP[s],Menu.V3s[0],Quaternion.identity,dsGO.transform);
+                ds[1]=Instantiate(Menu.d4LP[s],Menu.V3s[1],Quaternion.identity,dsGO.transform);
+                ds[2]=Instantiate(Menu.d6LP[s],Menu.V3s[2],Quaternion.identity,dsGO.transform);
+                ds[3]=Instantiate(Menu.d8LP[s],Menu.V3s[3],Quaternion.identity,dsGO.transform);
+                ds[4]=Instantiate(Menu.d10LP[s],Menu.V3s[4],Quaternion.identity,dsGO.transform);
+                ds[5]=Instantiate(Menu.d12LP[s],Menu.V3s[5],Quaternion.identity,dsGO.transform);
+                ds[6]=Instantiate(Menu.d20LP[s],Menu.V3s[6],Quaternion.identity,dsGO.transform);
             }
         }
 
         public void B() // B: Bag.
         {
-            s = -1;
-            Scene.Load(1);
+            s=-1;
+            Scene.Load(1); // Bag.
         }
 
         public void Checkmark() => IAP.Checkmark(s);
 
         public void Inventory()
         {
-            murasanca.Inventory.s =s;
-            Scene.Load(3);
+            murasanca.Inventory.s=s;
+            Scene.Load(3); // Inventory.
         }
 
         public void Key() => Set(s);
@@ -150,24 +134,29 @@ namespace murasanca
             cB.SetActive(true);
             cBL.GetComponent<IAPButton>().productId=s is not -1 ? IAP.ps[s] : IAP.ps[0];
             cBL.SetActive(true);
-            kB.GetComponent<Button>().interactable = true;
+            kB.GetComponent<Button>().interactable=true;
             kB.SetActive(true);
             lB.SetActive(false);
         }
-         
-        public void Reload() => PlayerPrefs.DeleteAll();
+
+        public void Reload()
+        {
+            Close();
+
+            Preferences.Delete();
+        }
 
         public void Slide(float s) // s: Sign.
         {
-            if (s is 1)
-                if (Bag.s is not 22)
+            if(s is 1)
+                if(Bag.s is not 22)
                     ++Bag.s;
                 else
-                    Bag.s = -1;
-            else if (Bag.s is not -1)
+                    Bag.s=-1;
+            else if(Bag.s is not -1)
                 --Bag.s;
             else
-                Bag.s = 22;
+                Bag.s=22;
 
             Set(Bag.s);
         }
@@ -180,28 +169,28 @@ namespace murasanca
             lB.SetActive(true);
         }
 
-        public static void Set() => Set(Preferences.DD = Preferences.D4 = Preferences.D6 = Preferences.D8 = Preferences.D10 = Preferences.D12 = Preferences.D20 = s);
+        public static void Set() => Set(Preferences.DD=Preferences.D4=Preferences.D6=Preferences.D8=Preferences.D10=Preferences.D12=Preferences.D20=s);
 
         public static void Set(int s) // s: Set.
         {
             cB.SetActive(false);
             cBL.SetActive(false);
-            
-            foreach (GameObject d in ds) // d: Dice.
+
+            foreach(GameObject d in ds) // d: Dice.
                 Destroy(d);
 
-            switch (s)
+            switch(s)
             {
                 case -1: // Shield
                     iB.SetActive(false);
                     kRI.SetActive(false);
-                    pTTMP.GetComponent<TextMeshProUGUI>().text = "0";
+                    pTTMP.GetComponent<TextMeshProUGUI>().text="0";
                     pTTMP.SetActive(true);
                     sRI.SetActive(true);
 
-                    if (IAP.HR(0))
+                    if(IAP.HR(0))
                     {
-                        kB.GetComponent<Button>().interactable = false;
+                        kB.GetComponent<Button>().interactable=false;
                         kB.SetActive(true);
                         lB.SetActive(false);
                     }
@@ -225,7 +214,7 @@ namespace murasanca
                     kB.SetActive(false);
                     sRI.SetActive(false);
 
-                    if (IAP.HR(s))
+                    if(IAP.HR(s))
                     {
                         iB.SetActive(true);
                         kRI.SetActive(true);
@@ -237,7 +226,7 @@ namespace murasanca
                         iB.SetActive(false);
                         kRI.SetActive(false);
                         lB.SetActive(true);
-                        pTTMP.GetComponent<TextMeshProUGUI>().text = ps[s];
+                        pTTMP.GetComponent<TextMeshProUGUI>().text=ps[s];
                         pTTMP.SetActive(true);
                     }
 

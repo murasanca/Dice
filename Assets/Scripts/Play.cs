@@ -28,20 +28,13 @@ public class Play:MonoBehaviour
         sT, // sT: Score Text (TMP).
         uP; // uP: Upper Panel.
 
-    [SerializeField]
-    private RectTransform[] rTs = new RectTransform[4]; // rTs: Rect Transforms.
-
     private GameObject gO; // gO: Game Object.
 
-    private int
-        f, // f: For.
-        s = 0; // s: Score.
+    private int s = 0; // s: Score.
 
-    private readonly Vector2 b = Menu.b; // b: Banner.
-
-    private readonly Vector2[]
-        v2s0 = new Vector2[4], // v2s0: Vector2's 0.
-        v2s1 = new Vector2[4]; // v2s1: Vector2's 1.
+    //private readonly Vector2[]
+    //    v2s0 = new Vector2[4], // v2s0: Vector2's 0.
+    //    v2s1 = new Vector2[4]; // v2s1: Vector2's 1.
 
     private readonly WaitForSeconds wFS = new(.1f); // wFS: Wait For Seconds.
 
@@ -83,20 +76,7 @@ public class Play:MonoBehaviour
 
     // Murat Sancak
 
-    private Vector2[] V2s => !Monetization.IBL||IAP.HR(0) ? v2s0 : v2s1; // V2s: Vector2's.
-
-    // Murat Sancak
-
-    private void Awake()
-    {
-        dGO=GameObject.Find("Dices Game Object");
-
-        for(f=0;f<rTs.Length;f++)
-        {
-            v2s0[f]=b+rTs[f].anchoredPosition;
-            v2s1[f]=rTs[f].anchoredPosition;
-        }
-    }
+    private void Awake() => dGO=GameObject.Find("Dices Game Object");
 
     private void OnDestroy()
     {
@@ -152,9 +132,6 @@ public class Play:MonoBehaviour
     {
         while(true)
         {
-            for(f=0;f<rTs.Length;f++)
-                rTs[f].anchoredPosition=V2s[f];
-
             foreach(GameObject d in ds) // d: Dice.
                 s+=d.GetComponent<Dice>().s;
             sT.GetComponent<TextMeshProUGUI>().text=s.ToString();

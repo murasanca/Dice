@@ -33,7 +33,7 @@ public class PG:MonoBehaviour // PG: Play Games.
                     ((PlayGamesPlatform)Social.Active).SetGravityForPopups(Gravity.TOP);
 
                     if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex is 0) // Menu.
-                            Menu.g.interactable=Menu.s.interactable=true;
+                        Menu.g.interactable=Menu.s.interactable=true;
                 }
             }
         );
@@ -76,19 +76,17 @@ public class PG:MonoBehaviour // PG: Play Games.
             }
         }
     }
-
-    public static void Leaderboard(int s) // s: Score.
-    {
-        if(Social.localUser.authenticated)
-            Social.ReportScore(s,PGS.leaderboard_dice,success => { });
-    }
-
     public static void Achievements()
     {
         if(Social.localUser.authenticated)
             Social.ShowAchievementsUI();
     }
 
+    public static void Leaderboard(int s) // s: Score.
+    {
+        if(Social.localUser.authenticated)
+            Social.ReportScore(s,PGS.leaderboard_dice,success => { });
+    }
     public static void Leaderboards() => Social.ShowLeaderboardUI();
 }
 

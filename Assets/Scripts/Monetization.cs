@@ -1,6 +1,5 @@
 // Murat Sancak
 
-using murasanca;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Advertisements;
@@ -8,13 +7,13 @@ using UnityEngine.Advertisements;
 public class Monetization:MonoBehaviour, IUnityAdsInitializationListener, IUnityAdsLoadListener, IUnityAdsShowListener
 {
 #if UNITY_IOS
-        private string
-            b = "Banner_iOS", // b: Banner.
-            g = "4474157", // g: Game.
-            i = "Interstitial_iOS", // i: Interstitial.
-            r = "Rewarded_iOS"; // r: Rewarded.
+    private const string
+        b = "Banner_iOS", // b: Banner.
+        g = "4474157", // g: Game.
+        i = "Interstitial_iOS", // i: Interstitial.
+        r = "Rewarded_iOS"; // r: Rewarded.
             
-#else // UNITY_ANDROID
+#else
     private const string
         b = "Banner_Android", // b: Banner.
         g = "4474156", // g: Game.
@@ -28,6 +27,8 @@ public class Monetization:MonoBehaviour, IUnityAdsInitializationListener, IUnity
 
     private readonly WaitForSeconds wFS = Menu.wFS; // wFS: Wait For Seconds.
 
+    private static int button = -1, s = -1; // s: Scene.
+
     public static bool
         iIL = false, // iIL: is Interstitial Loaded.
         iRL = false, // iRL: is Rewarded Loaded.
@@ -36,9 +37,7 @@ public class Monetization:MonoBehaviour, IUnityAdsInitializationListener, IUnity
         iIS = false, // iIS: Is Interstitial Showing.
         iRS = false; // iRS: Is Rewarded Showing.
 
-    private static int button = -1, s = -1; // s: Scene.
-
-    public static Monetization m;
+    public static Monetization m; // m: Monetization.
 
     // Murat Sancak
 
@@ -94,14 +93,12 @@ public class Monetization:MonoBehaviour, IUnityAdsInitializationListener, IUnity
 
     public static void Interstitial(int s) // s: Scene.
     {
-        if(!iIL||IAP.HR(0))
-            Scene.Reward(Monetization.s=s);
-        else
-        {
-            Monetization.s=s;
+        Monetization.s=s;
 
+        if(!iIL||IAP.HR(0))
+            Scene.Reward(s);
+        else
             Advertisement.Show(i,m);
-        }
     }
 
     public static void Rewarded(int b) // b: Button.
@@ -158,14 +155,12 @@ public class Monetization:MonoBehaviour, IUnityAdsInitializationListener, IUnity
                 Advertisement.Banner.Show(b);
                 break;
             case i:
-                Advertisement.Load(i,m);
-
                 iIL=false;
+                Advertisement.Load(i,m);
                 break;
             case r:
-                Advertisement.Load(r,m);
-
                 iRL=false;
+                Advertisement.Load(r,m);
                 break;
             default:
                 break;
@@ -204,7 +199,7 @@ public class Monetization:MonoBehaviour, IUnityAdsInitializationListener, IUnity
 
                 if(iRS&&uASCS is UnityAdsShowCompletionState.COMPLETED)
                     Play.Reward(button);
-                else // if(uASCS is UnityAdsShowCompletionState.SKIPPED || uASCS is UnityAdsShowCompletionState.UNKNOWN)
+                else // if(uASCS is UnityAdsShowCompletionState.SKIPPED||uASCS is UnityAdsShowCompletionState.UNKNOWN)
                     Handheld.Vibrate();
 
                 iRS=false;

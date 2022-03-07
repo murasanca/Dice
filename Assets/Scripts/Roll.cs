@@ -19,7 +19,7 @@ public class Roll:MonoBehaviour
             (
                 ! // Lower Panel
                 (
-                    t.position is { y:<432, y:>0 }
+                    t.position is { y:<384, y:>0 }
                 )
                 &&
                 (

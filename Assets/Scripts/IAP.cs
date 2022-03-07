@@ -10,6 +10,8 @@ public class IAP:MonoBehaviour, IStoreListener // IAP: In-App Purchase.
 {
     private ConfigurationBuilder cB; // cB: Configuration Builder.
 
+    private int f; // f: For.
+
     private static IExtensionProvider eP; // eP: Extension Provider.
 
     private static IStoreController sC; // sC: Store Controller.
@@ -67,13 +69,10 @@ public class IAP:MonoBehaviour, IStoreListener // IAP: In-App Purchase.
     private static void Checkmark(string p) // p: Product.
     {
         if(II)
-        {
-            IAP.p=sC.products.WithID(p);
-            if(IAP.p is not null&&IAP.p.availableToPurchase)
+            if((IAP.p=sC.products.WithID(p)) is not null&&IAP.p.availableToPurchase)
                 sC.InitiatePurchase(IAP.p);
             else
                 Handheld.Vibrate();
-        }
         else
             Handheld.Vibrate();
     }
@@ -86,13 +85,7 @@ public class IAP:MonoBehaviour, IStoreListener // IAP: In-App Purchase.
         UnityPurchasing.Initialize(iap,cB);
     }
 
-    public static bool HR(int p) // HR: Has Receipt, p: Product.
-    {
-        if(II)
-            return sC.products.WithID(ps[p]).hasReceipt;
-        else
-            return false;
-    }
+    public static bool HR(int p) => II&&sC.products.WithID(ps[p]).hasReceipt; // HR: Has Receipt, p: Product.
 
     public static void Checkmark(int p) // p: Product.
     {
@@ -106,7 +99,7 @@ public class IAP:MonoBehaviour, IStoreListener // IAP: In-App Purchase.
 
     public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs pEA) // pEA: Purchase Event Args.
     {
-        if(string.Equals(pEA.purchasedProduct.definition.id,ps[0],StringComparison.Ordinal))
+        if(String.Equals(pEA.purchasedProduct.definition.id,ps[0],StringComparison.Ordinal))
         {
             if(SceneManager.GetActiveScene().buildIndex is 1) // Bag.
                 Bag.Set(-1);
@@ -116,8 +109,8 @@ public class IAP:MonoBehaviour, IStoreListener // IAP: In-App Purchase.
             return PurchaseProcessingResult.Complete;
         }
 
-        for(int i = 1;i<ps.Length;i++)
-            if(string.Equals(pEA.purchasedProduct.definition.id,ps[i],StringComparison.Ordinal))
+        for(f=1;f<ps.Length;f++)
+            if(String.Equals(pEA.purchasedProduct.definition.id,ps[f],StringComparison.Ordinal))
             {
                 if(SceneManager.GetActiveScene().buildIndex is 1) // Bag.
                     Bag.Set();

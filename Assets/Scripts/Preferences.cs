@@ -1,6 +1,5 @@
 // Murat Sancak
 
-using murasanca;
 using UnityEngine;
 
 public class Preferences:PlayerPrefs
@@ -157,6 +156,13 @@ public class Preferences:PlayerPrefs
             SetInt("poly",value);
             Save();
         }
+    }
+
+    public static void Delete()
+    {
+        DeleteKey("p");
+        DeleteKey("poly");
+        DeleteKey("v");
     }
 }
 

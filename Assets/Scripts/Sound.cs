@@ -1,6 +1,5 @@
 // Murat Sancak
 
-using murasanca;
 using UnityEngine;
 
 public class Sound:MonoBehaviour
@@ -42,8 +41,6 @@ public class Sound:MonoBehaviour
     {
         aS.pitch=Preferences.P;
         aS.volume=Preferences.V;
-
-        Time.timeScale=Mathf.Abs(Preferences.P);
     }
 }
 
