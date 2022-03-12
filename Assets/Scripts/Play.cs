@@ -162,14 +162,13 @@ public class Play:MonoBehaviour
         A.SetActive(!a);
         U.SetActive(a);
 
-        dDAB.interactable=
-        d4AB.interactable=
-        d6AB.interactable=
-        d8AB.interactable=
-        d10AB.interactable=
-        d12AB.interactable=
-        d20AB.interactable=
-        i;
+        dDAB.interactable=dDs.Count is not 2&&i;
+        d4AB.interactable=d4s.Count is not 2&&i;
+        d6AB.interactable=d6s.Count is not 2&&i;
+        d8AB.interactable=d8s.Count is not 2&&i;
+        d10AB.interactable=d10s.Count is not 2&&i;
+        d12AB.interactable=d12s.Count is not 2&&i;
+        d20AB.interactable=d20s.Count is not 2&&i;
 
         dDDB.interactable=dDs.Count is not 0;
         d4DB.interactable=d4s.Count is not 0;
