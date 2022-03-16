@@ -1044,8 +1044,8 @@ GameObject:
   m_Component:
   - component: {fileID: 750081527}
   - component: {fileID: 750081531}
-  - component: {fileID: 750081530}
   - component: {fileID: 750081528}
+  - component: {fileID: 750081530}
   - component: {fileID: 750081529}
   m_Layer: 5
   m_Name: Bag Button
