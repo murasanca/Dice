@@ -41,12 +41,12 @@
       "source": "builtin",
       "dependencies": {
         "com.unity.mobile.android-logcat": "1.2.3",
-        "com.unity.adaptiveperformance": "3.0.0",
+        "com.unity.adaptiveperformance": "3.0.2",
         "com.unity.mobile.notifications": "2.0.0"
       }
     },
     "com.unity.ide.rider": {
-      "version": "3.0.12",
+      "version": "3.0.13",
       "depth": 0,
       "source": "registry",
       "dependencies": {
