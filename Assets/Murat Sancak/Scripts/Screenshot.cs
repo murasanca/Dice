@@ -5,6 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using static System.Environment;
 using static System.String;
+using static UnityEditor.AssetDatabase;
 using static UnityEditor.EditorGUI;
 using static UnityEditor.EditorStyles;
 
@@ -15,15 +16,22 @@ namespace murasanca
         private bool
             l = true, // l: Left.
             r = false; // r: Right.
+
         private GameObject c; // c: Camera.
+
         private GUIContent m; // m: murasanca.
+
         private int pu; // pu: Pop-up.
+
         private string
             e = "", // e: Extension.
             n = "", // n: Name.
             p = ""; // p: Path.
+
         private readonly string[] o = new string[3] { "Data","Desktop","Other" }; // o: Options.
+
         private static EditorWindow eW; // eW: Editor Window.
+
         private static Vector2Int
             h = new(256,128), // h: Horizontal.
             v = new(256,512); // v: Vertical.
@@ -33,7 +41,7 @@ namespace murasanca
         [MenuItem("Murat Sancak/Screenshot",false,0)]
         private static void S() // S: Screenshot.
         {
-            eW=GetWindow<Screenshot>(false,"Screenshot",true);
+            eW=GetWindow<Screenshot>(true,"Screenshot by Murat Sancak",true);
             eW.maxSize=eW.minSize=h;
             eW.position=Rect.zero;
             eW.Show();
@@ -41,7 +49,7 @@ namespace murasanca
 
         // Murat Sancak
 
-        private void Awake() => m=new GUIContent("Screenshot by Murat Sancak",AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/Murat Sancak/Sprites/Murat Sancak.png"));
+        private void Awake() => m=new GUIContent("Screenshot by Murat Sancak",LoadAssetAtPath<Texture2D>("Assets/Murat Sancak/Sprites/Murat Sancak.png"));
 
         private void OnGUI()
         {
@@ -113,8 +121,10 @@ namespace murasanca
                     // Y Label Field.
                     LabelField(new Rect(position.width/2+8,312,position.width/2-16,16),Concat("Y:\t",c.GetComponent<Camera>().pixelHeight),centeredGreyMiniLabel);
 
-                    // Path Label Field.
-                    LabelField(new Rect(8,336,position.width-16,56),R('/',Concat(p,'/',n,'.',e)),wordWrappedMiniLabel);
+                    // Screenshot Label Field.
+                    LabelField(new Rect(8,336,position.width-16,16),"Screenshot",centeredGreyMiniLabel);
+                    // File Label Field.
+                    LabelField(new Rect(8,360,position.width-16,32),R('/',Concat(p,'/',n,'.',e)),wordWrappedMiniLabel);
                 }
                 else // popup is 0 or 1.
                 {
@@ -146,8 +156,10 @@ namespace murasanca
                     // Y Label Field.
                     LabelField(new Rect(position.width/2+8,272,position.width/2-16,16),Concat("Y:\t",c.GetComponent<Camera>().pixelHeight),centeredGreyMiniLabel);
 
-                    // Path Label Field.
-                    LabelField(new Rect(8,296,position.width-16,96),R('/',Concat(p,'/',n,'.',e)),wordWrappedMiniLabel);
+                    // Screenshot Label Field.
+                    LabelField(new Rect(8,296,position.width-16,16),"Screenshot",centeredGreyMiniLabel);
+                    // File Label Field.
+                    LabelField(new Rect(8,320,position.width-16,72),R('/',Concat(p,'/',n,'.',e)),wordWrappedMiniLabel);
                 }
 
                 // Capture Screenshot Button.
@@ -175,10 +187,14 @@ namespace murasanca
 
         private void OnInspectorUpdate()
         {
-            m=new GUIContent("Screenshot by Murat Sancak",AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/Murat Sancak/Sprites/Murat Sancak.png"));
+            m=new GUIContent("Screenshot by Murat Sancak",LoadAssetAtPath<Texture2D>("Assets/Murat Sancak/Sprites/Murat Sancak.png"));
 
             Repaint();
         }
+
+        private void OnProjectChange() => Refresh();
+
+        private void OnSelectionChange() => Refresh();
 
         // Murat Sancak
 
